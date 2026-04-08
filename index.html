@@ -3,853 +3,452 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Operations Dashboard — BeaverMind.ai</title>
+<title>Ruben HQ — Operations Dashboard</title>
 <style>
-:root {
-  --bg: #f5f5f7;
-  --bg-card: #ffffff;
-  --bg-header: #ffffff;
-  --text: #1d1d1f;
-  --text-secondary: #6e6e73;
-  --text-tertiary: #aeaeb2;
-  --border: #e5e5ea;
-  --border-light: #f2f2f7;
-  --accent: #0071e3;
-  --green: #30d158;
-  --yellow: #ffd60a;
-  --red: #ff453a;
-  --gray: #8e8e93;
-  --green-bg: rgba(48,209,88,0.1);
-  --yellow-bg: rgba(255,214,10,0.1);
-  --red-bg: rgba(255,69,58,0.1);
-  --shadow: 0 1px 3px rgba(0,0,0,0.06);
-  --shadow-lg: 0 4px 12px rgba(0,0,0,0.08);
-  --radius: 10px;
-  --radius-sm: 6px;
-  --transition: 0.2s ease;
-  --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-}
-
-[data-theme="dark"] {
-  --bg: #1c1c1e;
-  --bg-card: #2c2c2e;
-  --bg-header: #2c2c2e;
-  --text: #f5f5f7;
-  --text-secondary: #aeaeb2;
-  --text-tertiary: #636366;
-  --border: #3a3a3c;
-  --border-light: #2c2c2e;
-  --green-bg: rgba(48,209,88,0.15);
-  --yellow-bg: rgba(255,214,10,0.15);
-  --red-bg: rgba(255,69,58,0.15);
-  --shadow: 0 1px 3px rgba(0,0,0,0.2);
-  --shadow-lg: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  font-family: var(--font);
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-}
-
-.header {
-  background: var(--bg-header);
-  border-bottom: 1px solid var(--border);
-  padding: 12px 24px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: var(--shadow);
-}
-
-.header-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.health-badge {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: 700;
-  color: #fff;
-  flex-shrink: 0;
-}
-.health-badge.healthy { background: var(--green); }
-.health-badge.warning { background: var(--yellow); color: var(--text); }
-.health-badge.critical { background: var(--red); }
-
-.header-info { flex: 1; min-width: 200px; }
-.header-title { font-size: 16px; font-weight: 600; }
-.header-meta { font-size: 12px; color: var(--text-secondary); display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-
-.stale-warning {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  color: #b8860b;
-  font-size: 11px;
-  font-weight: 600;
-  background: var(--yellow-bg);
-  padding: 2px 8px;
-  border-radius: 12px;
-}
-[data-theme="dark"] .stale-warning { color: var(--yellow); }
-
-.header-controls { display: flex; align-items: center; gap: 8px; }
-
-.search-input {
-  padding: 6px 12px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  background: var(--bg);
-  color: var(--text);
-  font-size: 13px;
-  width: 200px;
-  outline: none;
-  transition: border var(--transition);
-}
-.search-input:focus { border-color: var(--accent); }
-.search-input::placeholder { color: var(--text-tertiary); }
-
-.theme-toggle {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text-secondary);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  transition: all var(--transition);
-}
-.theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
-
-.tabs {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 12px 24px 0;
-  display: flex;
-  gap: 4px;
-}
-
-.tab {
-  padding: 8px 16px;
-  font-size: 13px;
-  font-weight: 500;
-  border: none;
-  background: transparent;
-  color: var(--text-secondary);
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all var(--transition);
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
-  font-family: var(--font);
-}
-.tab:hover { color: var(--text); background: var(--border-light); }
-.tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-
-.main {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 16px 24px 48px;
-}
-
-.tab-content { display: none; }
-.tab-content.active { display: block; }
-
-.card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px;
-  box-shadow: var(--shadow);
-}
-
-.card-title {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-secondary);
-  margin-bottom: 10px;
-}
-
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-.grid-4 { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; }
-
-.section + .section { margin-top: 16px; }
-
-.status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  display: inline-block;
-  flex-shrink: 0;
-}
-.status-dot.operational, .status-dot.working, .status-dot.active { background: var(--green); }
-.status-dot.warning { background: var(--yellow); }
-.status-dot.critical, .status-dot.error { background: var(--red); }
-.status-dot.unknown, .status-dot.inactive { background: var(--gray); }
-
-.platform-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border-light);
-}
-.platform-row:last-child { border-bottom: none; }
-.platform-name { font-size: 13px; font-weight: 500; flex: 1; }
-.platform-summary { font-size: 12px; color: var(--text-secondary); }
-
-.mcp-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-light);
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.rec-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border-light);
-  font-size: 13px;
-}
-.rec-item:last-child { border-bottom: none; }
-.rec-icon { flex-shrink: 0; font-size: 14px; }
-
-.table-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 0;
-  border-bottom: 1px solid var(--border-light);
-  font-size: 13px;
-}
-.table-row:last-child { border-bottom: none; }
-.table-count {
-  font-size: 12px;
-  color: var(--text-secondary);
-  background: var(--border-light);
-  padding: 1px 8px;
-  border-radius: 10px;
-  font-weight: 500;
-}
-
-.category-group { margin-bottom: 16px; }
-.category-group:last-child { margin-bottom: 0; }
-
-.category-header {
-  font-size: 13px;
-  font-weight: 600;
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-  margin-bottom: 4px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.asset-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 4px;
-  border-bottom: 1px solid var(--border-light);
-  cursor: pointer;
-  transition: background var(--transition);
-  border-radius: var(--radius-sm);
-}
-.asset-row:hover { background: var(--border-light); }
-.asset-row:last-of-type { border-bottom: none; }
-
-.asset-name { font-size: 13px; font-weight: 500; flex: 1; }
-
-.asset-badge {
-  font-size: 10px;
-  font-weight: 600;
-  padding: 1px 7px;
-  border-radius: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-.asset-badge.active { background: var(--green-bg); color: #1a9e3e; }
-[data-theme="dark"] .asset-badge.active { color: var(--green); }
-.asset-badge.inactive { background: var(--border-light); color: var(--gray); }
-.asset-badge.skill { background: rgba(0,113,227,0.1); color: var(--accent); }
-.asset-badge.task { background: rgba(175,82,222,0.1); color: #af52de; }
-
-.asset-desc {
-  font-size: 12px;
-  color: var(--text-secondary);
-  padding: 4px 0 6px 28px;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.2s ease, padding 0.2s ease, opacity 0.15s ease;
-  opacity: 0;
-}
-.asset-desc.open {
-  max-height: 80px;
-  opacity: 1;
-  padding: 4px 0 6px 28px;
-}
-
-.chevron {
-  font-size: 10px;
-  color: var(--text-tertiary);
-  transition: transform 0.15s ease;
-  flex-shrink: 0;
-  display: inline-block;
-}
-.chevron.open { transform: rotate(90deg); }
-
-.tree-node { padding-left: 16px; }
-.tree-root { padding-left: 0; }
-.tree-label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 0;
-  font-size: 13px;
-  cursor: default;
-}
-.tree-icon { font-size: 12px; }
-.tree-count { font-size: 11px; color: var(--text-tertiary); }
-
-.history-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border-light);
-}
-.history-row:last-child { border-bottom: none; }
-
-.history-score {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 700;
-  color: #fff;
-  flex-shrink: 0;
-}
-
-.history-date { font-size: 12px; color: var(--text-secondary); min-width: 80px; }
-.history-summary { font-size: 13px; flex: 1; }
-
-.search-hidden { display: none !important; }
-
-.no-results {
-  text-align: center;
-  padding: 32px;
-  color: var(--text-secondary);
-  font-size: 14px;
-}
-
-@media (max-width: 768px) {
-  .header { padding: 10px 16px; }
-  .header-inner { gap: 10px; }
-  .search-input { width: 140px; }
-  .grid-2, .grid-3 { grid-template-columns: 1fr; }
-  .grid-4 { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
-  .main { padding: 12px 16px 48px; }
-  .tabs { padding: 10px 16px 0; }
-}
+:root{--bg:#FAFAFA;--surface:#FFF;--surface2:#F3F4F6;--border:#E5E7EB;--text:#111827;--text2:#6B7280;--text3:#9CA3AF;--blue:#3B82F6;--blue-bg:#EFF6FF;--green:#10B981;--green-bg:#ECFDF5;--purple:#8B5CF6;--purple-bg:#F5F3FF;--orange:#F59E0B;--orange-bg:#FFFBEB;--teal:#14B8A6;--teal-bg:#F0FDFA;--red:#EF4444;--red-bg:#FEF2F2;--gray:#6B7280;--gray-bg:#F9FAFB;--shadow:0 1px 3px rgba(0,0,0,.08);--shadow-lg:0 4px 12px rgba(0,0,0,.1);--r:12px;--rs:8px}
+[data-theme=dark]{--bg:#0F172A;--surface:#1E293B;--surface2:#334155;--border:#475569;--text:#F1F5F9;--text2:#94A3B8;--text3:#64748B;--blue-bg:#1E3A5F;--green-bg:#134E4A;--purple-bg:#2E1065;--orange-bg:#451A03;--teal-bg:#134E4A;--red-bg:#450A0A;--gray-bg:#1E293B;--shadow:0 1px 3px rgba(0,0,0,.3);--shadow-lg:0 4px 12px rgba(0,0,0,.4)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;padding:24px;max-width:1000px;margin:0 auto;transition:background .3s,color .3s}
+.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.header h1{font-size:28px;font-weight:700;letter-spacing:-.5px}
+.header h1 span{color:var(--blue)}
+.header-sub{font-size:13px;color:var(--text3);margin-left:8px;font-weight:400}
+.theme-toggle{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:6px 14px;cursor:pointer;font-size:14px;color:var(--text);transition:all .2s}
+.theme-toggle:hover{box-shadow:var(--shadow-lg)}
+.stats{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--rs);padding:8px 14px;font-size:12px;color:var(--text2);box-shadow:var(--shadow)}
+.stat strong{color:var(--text);font-size:16px;margin-right:3px}
+.tabs{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap}
+.tab{background:var(--surface);border:1px solid var(--border);border-radius:var(--rs);padding:8px 16px;font-size:13px;font-weight:500;cursor:pointer;color:var(--text2);transition:all .2s}
+.tab:hover{color:var(--text)}
+.tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.search-container{margin-bottom:16px}
+.search-input{width:100%;padding:10px 16px 10px 40px;border:1px solid var(--border);border-radius:var(--rs);font-size:14px;background:var(--surface);color:var(--text);outline:none;transition:border .2s;box-shadow:var(--shadow)}
+.search-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,130,246,.15)}
+.search-wrap{position:relative}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--text3)}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:8px;box-shadow:var(--shadow);margin-bottom:12px}
+.panel-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);padding:8px 12px 4px;display:flex;align-items:center;gap:6px}
+.panel-theme{font-size:12px;color:var(--text2);padding:0 12px 8px;font-style:italic;text-transform:none;letter-spacing:0;font-weight:400}
+.card{display:flex;align-items:flex-start;gap:10px;padding:12px;border-radius:var(--rs);transition:background .15s;cursor:default}
+.card:hover{background:var(--bg)}
+.card-bar{width:4px;border-radius:2px;flex-shrink:0;align-self:stretch;min-height:20px}
+.card-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.card-body{flex:1;min-width:0}
+.card-name{font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.card-desc{font-size:13px;color:var(--text2);margin-top:2px}
+.card-benefit{font-size:12px;color:var(--text3);margin-top:1px;font-style:italic}
+.card-note{font-size:11px;color:var(--orange);margin-top:3px;padding:3px 0}
+.card-link{font-size:11px;margin-top:3px}
+.card-link a{color:var(--blue);text-decoration:none}
+.card-link a:hover{text-decoration:underline}
+.badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:500;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.badge-blue{background:var(--blue-bg);color:var(--blue)}
+.badge-green{background:var(--green-bg);color:var(--green)}
+.badge-purple{background:var(--purple-bg);color:var(--purple)}
+.badge-orange{background:var(--orange-bg);color:var(--orange)}
+.badge-teal{background:var(--teal-bg);color:var(--teal)}
+.badge-gray{background:var(--gray-bg);color:var(--gray)}
+.badge-red{background:var(--red-bg);color:var(--red)}
+.legend{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);background:var(--surface);padding:3px 10px;border-radius:20px;border:1px solid var(--border)}
+.legend-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.controls{display:flex;gap:8px;margin-bottom:10px}
+.ctrl-btn{background:var(--surface);border:1px solid var(--border);border-radius:var(--rs);padding:5px 12px;font-size:11px;cursor:pointer;color:var(--text2);transition:all .2s}
+.ctrl-btn:hover{color:var(--text);box-shadow:var(--shadow)}
+.folder{border-radius:var(--rs);margin:2px 0}
+.folder-header{display:flex;align-items:flex-start;gap:8px;padding:10px 12px;border-radius:var(--rs);cursor:pointer;transition:background .15s;user-select:none}
+.folder-header:hover{background:var(--bg)}
+.folder-chevron{font-size:11px;flex-shrink:0;margin-top:5px;color:var(--text3);transition:transform .2s;width:14px;text-align:center}
+.folder.open>.folder-header .folder-chevron{transform:rotate(90deg)}
+.folder-children{display:none;margin-left:28px;border-left:2px solid var(--border);padding-left:4px}
+.folder.open>.folder-children{display:block}
+.hidden{display:none!important}
+/* Compact skill cards for Nick Saraev */
+.compact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px 8px}
+.compact-card{display:flex;align-items:center;gap:6px;padding:6px 10px;border-radius:var(--rs);font-size:12px;color:var(--text);transition:background .15s;cursor:default}
+.compact-card:hover{background:var(--bg)}
+.compact-icon{font-size:14px;flex-shrink:0}
+.compact-name{font-weight:500}
+.subcat-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.3px;color:var(--text3);padding:8px 12px 2px;margin-top:4px}
+/* Functions tab - connection grid */
+.conn-card{display:flex;align-items:flex-start;gap:10px;padding:12px;border-radius:var(--rs);transition:background .15s}
+.conn-card:hover{background:var(--bg)}
+.conn-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.conn-dot.working{background:var(--green)}
+.conn-dot.error{background:var(--red)}
+.conn-dot.unknown{background:var(--gray)}
+.conn-body{flex:1}
+.conn-name{font-weight:600;font-size:14px}
+.conn-name a{color:var(--text);text-decoration:none}
+.conn-name a:hover{color:var(--blue);text-decoration:underline}
+.conn-desc{font-size:12px;color:var(--text2);margin-top:1px}
+/* Health Report tab */
+.health-hero{display:flex;align-items:center;gap:20px;padding:20px;margin-bottom:12px}
+.health-circle{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:800;color:#fff;flex-shrink:0}
+.health-circle.healthy{background:var(--green)}
+.health-circle.warning{background:var(--orange)}
+.health-circle.critical{background:var(--red)}
+.health-info h2{font-size:20px;font-weight:700}
+.health-info p{font-size:13px;color:var(--text2)}
+.health-unavailable{text-align:center;padding:40px 20px;color:var(--text2)}
+.health-unavailable h3{font-size:18px;margin-bottom:8px;color:var(--text)}
+.platform-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--border);transition:background .15s}
+.platform-row:last-child{border-bottom:none}
+.platform-row:hover{background:var(--bg)}
+.platform-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.platform-dot.operational{background:var(--green)}
+.platform-dot.degraded,.platform-dot.warning{background:var(--orange)}
+.platform-dot.down,.platform-dot.error{background:var(--red)}
+.platform-dot.unknown{background:var(--gray)}
+.platform-name{font-weight:500;font-size:13px;flex:1}
+.platform-name a{color:var(--text);text-decoration:none}
+.platform-name a:hover{color:var(--blue)}
+.platform-summary{font-size:12px;color:var(--text2);text-align:right}
+.mcp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px;padding:8px}
+.mcp-chip{display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:var(--rs);border:1px solid var(--border);font-size:12px;font-weight:500;transition:background .15s}
+.mcp-chip:hover{background:var(--bg)}
+.mcp-chip a{color:var(--text);text-decoration:none}
+.mcp-chip a:hover{color:var(--blue)}
+.mcp-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.mcp-dot.working{background:var(--green)}
+.mcp-dot.error{background:var(--red)}
+.mcp-dot.unknown{background:var(--gray)}
+.table-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.table-row{display:flex;justify-content:space-between;align-items:center;padding:5px 12px;border-bottom:1px solid var(--border);font-size:12px}
+.table-row:nth-child(odd){background:var(--surface2)}
+.table-count{color:var(--text2);font-weight:500}
+.rec-item{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-bottom:1px solid var(--border);font-size:13px}
+.rec-item:last-child{border-bottom:none}
+.rec-icon{flex-shrink:0;color:var(--orange)}
+.history-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid var(--border)}
+.history-row:last-child{border-bottom:none}
+.history-score{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
+.history-date{font-size:12px;color:var(--text2);min-width:80px}
+.history-summary{font-size:13px;flex:1}
+.footer{text-align:center;padding:24px 0 8px;font-size:12px;color:var(--text3)}
+@media(max-width:600px){body{padding:12px}.header h1{font-size:22px}.stats,.tabs{flex-direction:column}.folder-children{margin-left:16px}.compact-grid{grid-template-columns:1fr}.table-grid{grid-template-columns:1fr}.health-hero{flex-direction:column;text-align:center}}
 </style>
 </head>
 <body>
-
-<script>
-window.DASHBOARD_DATA = {
-  "healthScore": 3,
-  "healthStatus": "critical",
-  "generatedAt": "2026-04-07T16:50:00Z",
-  "localDataAge": "unavailable",
-  "platforms": {
-    "n8n_vps": {
-      "status": "degraded",
-      "summary": "50 failed executions in 24h, all recent runs showing errors"
-    },
-    "local_tasks": {
-      "status": "down",
-      "summary": "No sync data yet, task hasn't run first cycle"
-    },
-    "apps_script": {
-      "status": "unknown",
-      "summary": "No data available"
-    }
-  },
-  "mcpConnections": [],
-  "workflows": [
-    {
-      "name": "ElevenLabs Call Logs Sync",
-      "category": "ElevenLabs",
-      "active": true,
-      "description": "AI voice call monitoring"
-    },
-    {
-      "name": "GHL to Supabase Sync (Polling)",
-      "category": "CRM",
-      "active": true,
-      "description": "Sales pipeline sync"
-    },
-    {
-      "name": "2. Scrape Lead Profile LinkedIn",
-      "category": "LinkedIn",
-      "active": true,
-      "description": "Lead generation pipeline"
-    },
-    {
-      "name": "[ONLINE] - Content Capture Bot",
-      "category": "Content",
-      "active": true,
-      "description": "Content capture system"
-    },
-    {
-      "name": "\ud83c\udfe5 Daily Health Check",
-      "category": "System",
-      "active": false,
-      "description": "Health monitoring (INACTIVE)"
-    },
-    {
-      "name": "YouTube Scout Scraper (Weekly)",
-      "category": "Content",
-      "active": true,
-      "description": "YouTube content monitoring"
-    },
-    {
-      "name": "0. Linkedin Post Capture",
-      "category": "LinkedIn",
-      "active": true,
-      "description": "LinkedIn content capture"
-    },
-    {
-      "name": "ElevenLabs Agent Config Sync",
-      "category": "ElevenLabs",
-      "active": true,
-      "description": "AI agent configuration sync"
-    },
-    {
-      "name": "1. LinkedIn Comment Scraper",
-      "category": "LinkedIn",
-      "active": true,
-      "description": "LinkedIn engagement monitoring"
-    },
-    {
-      "name": "ElevenLabs Usage Sync",
-      "category": "ElevenLabs",
-      "active": true,
-      "description": "Usage analytics sync"
-    },
-    {
-      "name": "Drive Report Monitor (LinkedIn Agency)",
-      "category": "LinkedIn",
-      "active": true,
-      "description": "Agency reporting automation"
-    }
-  ],
-  "skills": [],
-  "scheduledTasks": [],
-  "folderTree": {
-    "name": "Ruben HQ",
-    "children": []
-  },
-  "supabaseTables": {
-    "agent_metrics": 0,
-    "agent_reflections": 0,
-    "agents": 6,
-    "case_studies": 0,
-    "chat_conversations": 1,
-    "chat_messages": 4,
-    "clients": 3,
-    "contacts": 0,
-    "content_posts": 1,
-    "content_topics": 1,
-    "daily_briefs": 0,
-    "elevenlabs_agents": 13,
-    "elevenlabs_calls": 30,
-    "elevenlabs_usage": 1,
-    "execution_logs": 6,
-    "ghl_leads": 3,
-    "health_check_snapshots": 0,
-    "linkedin_agency_reports": 0,
-    "memories": 80,
-    "messages": 3,
-    "oauth_tokens": 1,
-    "opportunities": 0,
-    "outreach_prospects": 0,
-    "projects": 0,
-    "prospect_briefings": 0,
-    "tasks": 5,
-    "youtube_topics": 1
-  },
-  "recommendations": [
-    "Emergency investigation of n8n execution failures - 100% error rate",
-    "Activate Daily Health Check workflow immediately",
-    "Initialize local sync task to establish baseline monitoring"
-  ],
-  "history": []
-};
-</script>
-
-<header class="header">
-  <div class="header-inner">
-    <div class="health-badge" id="healthBadge"></div>
-    <div class="header-info">
-      <div class="header-title">Operations Dashboard</div>
-      <div class="header-meta">
-        <span id="headerTimestamp"></span>
-        <span id="headerAge"></span>
-        <span id="staleWarning" class="stale-warning" style="display:none;"></span>
-      </div>
-    </div>
-    <div class="header-controls">
-      <input type="text" class="search-input" id="searchInput" placeholder="Search everything...">
-      <button class="theme-toggle" id="themeToggle" title="Toggle dark/light theme">&#9790;</button>
-    </div>
+<div class="header">
+  <h1>Ruben <span>HQ</span> <span class="header-sub">Operations Dashboard</span></h1>
+  <button class="theme-toggle" onclick="toggleTheme()">&#127769; Dark</button>
+</div>
+<div class="stats">
+  <div class="stat"><strong>7</strong> areas</div>
+  <div class="stat"><strong>13</strong> active skills</div>
+  <div class="stat"><strong>10</strong> connections</div>
+  <div class="stat">Updated: <strong id="update-date"></strong></div>
+  <div class="stat" id="health-stat" style="display:none">Health: <strong id="health-score-mini"></strong>/10</div>
+</div>
+<div class="tabs">
+  <div class="tab active" onclick="showTab('folders')">&#128193; Folders</div>
+  <div class="tab" onclick="showTab('skills')">&#9889; Skills</div>
+  <div class="tab" onclick="showTab('functions')">&#129302; Functions</div>
+  <div class="tab" onclick="showTab('health')">&#127973; Health Report</div>
+</div>
+<div class="search-container">
+  <div class="search-wrap">
+    <span class="search-icon">&#128269;</span>
+    <input type="text" class="search-input" placeholder="Search everything..." oninput="searchAll(this.value)">
   </div>
-</header>
-
-<nav class="tabs" id="tabNav">
-  <button class="tab active" data-tab="status">System Status</button>
-  <button class="tab" data-tab="assets">Assets</button>
-  <button class="tab" data-tab="history">History</button>
-</nav>
-
-<div class="main">
-  <!-- TAB: SYSTEM STATUS -->
-  <div class="tab-content active" id="tab-status">
-    <div class="grid-2 section">
-      <div class="card">
-        <div class="card-title">Automation Platforms</div>
-        <div id="platformList"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Supabase Tables</div>
-        <div id="supabaseList"></div>
-      </div>
-    </div>
-    <div class="section">
-      <div class="card">
-        <div class="card-title">MCP Connections</div>
-        <div class="grid-4" id="mcpGrid"></div>
-      </div>
-    </div>
-    <div class="section">
-      <div class="card">
-        <div class="card-title">Recommendations</div>
-        <div id="recList"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB: ASSETS -->
-  <div class="tab-content" id="tab-assets">
-    <div class="card section" id="workflowsCard">
-      <div class="card-title">n8n Workflows</div>
-      <div id="workflowList"></div>
-    </div>
-    <div class="grid-2 section">
-      <div class="card">
-        <div class="card-title">Claude Skills</div>
-        <div id="skillList"></div>
-      </div>
-      <div class="card">
-        <div class="card-title">Scheduled Tasks</div>
-        <div id="taskList"></div>
-      </div>
-    </div>
-    <div class="card section">
-      <div class="card-title">Folder Structure</div>
-      <div id="folderTree"></div>
-    </div>
-  </div>
-
-  <!-- TAB: HISTORY -->
-  <div class="tab-content" id="tab-history">
-    <div class="card">
-      <div class="card-title">Last 7 Health Reports</div>
-      <div id="historyList"></div>
-    </div>
-  </div>
-
-  <div class="no-results" id="noResults" style="display:none;">No results match your search.</div>
 </div>
 
+<!-- TAB 1: FOLDERS -->
+<div class="tab-content active" id="tab-folders">
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>Business</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--green)"></div>Personal</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--purple)"></div>Projects</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--orange)"></div>Finance &amp; Legal</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--teal)"></div>Property</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--gray)"></div>System</div>
+</div>
+<div class="controls">
+  <button class="ctrl-btn" onclick="expandAll()">+ Expand All</button>
+  <button class="ctrl-btn" onclick="collapseAll()">- Collapse All</button>
+</div>
+<div class="panel" id="tree"></div>
+</div>
+
+<!-- TAB 2: SKILLS -->
+<div class="tab-content" id="tab-skills">
+<div class="panel">
+  <div class="panel-title">&#9889; Custom BeaverMind Skills <span class="badge badge-blue">6 skills</span></div>
+  <div class="panel-theme">Built specifically for BeaverMind -- content creation, competitor research, and skill building</div>
+  <div class="card" data-search="linkedin-post draft content custom beavermind"><div class="card-bar" style="background:var(--blue)"></div><div class="card-icon">&#9997;&#65039;</div><div class="card-body"><div class="card-name">/linkedin-post <span class="badge badge-blue">Custom</span></div><div class="card-desc">Drafts LinkedIn posts in your authentic operator voice. Works from research insights, case studies, trends, or any prompt.</div><div class="card-benefit">Your most-used skill -- produces ready-to-post LinkedIn content in seconds.</div></div></div>
+  <div class="card" data-search="youtube-to-post video custom beavermind"><div class="card-bar" style="background:var(--blue)"></div><div class="card-icon">&#127909;</div><div class="card-body"><div class="card-name">/youtube-to-post <span class="badge badge-blue">Custom</span></div><div class="card-desc">Extracts key insights from any YouTube video URL and turns them into LinkedIn posts in your voice.</div><div class="card-benefit">Repurpose video content into LinkedIn without watching and re-writing manually.</div></div></div>
+  <div class="card" data-search="weekly-content-batch monday content custom beavermind"><div class="card-bar" style="background:var(--blue)"></div><div class="card-icon">&#128197;</div><div class="card-body"><div class="card-name">/weekly-content-batch <span class="badge badge-blue">Custom</span></div><div class="card-desc">Plans and generates a full week (5 posts) of LinkedIn content in one session, balanced across post types.</div><div class="card-benefit">One session on Monday = entire week of content done.</div></div></div>
+  <div class="card" data-search="competitor-analysis linkedin custom beavermind"><div class="card-bar" style="background:var(--blue)"></div><div class="card-icon">&#128373;&#65039;</div><div class="card-body"><div class="card-name">/competitor-analysis <span class="badge badge-blue">Custom</span></div><div class="card-desc">Analyzes top-performing LinkedIn posts from competitors in AI automation and coaching/consulting niches.</div><div class="card-benefit">See what's working for others, then create your own better version.</div></div></div>
+  <div class="card" data-search="research-trends topics custom beavermind"><div class="card-bar" style="background:var(--blue)"></div><div class="card-icon">&#128200;</div><div class="card-body"><div class="card-name">/research-trends <span class="badge badge-blue">Custom</span></div><div class="card-desc">Researches trending topics in AI automation, sales systems, and coaching/consulting scaling.</div><div class="card-benefit">Fresh content angles based on what your audience is actually talking about right now.</div></div></div>
+  <div class="card" data-search="create-skill build custom beavermind"><div class="card-bar" style="background:var(--blue)"></div><div class="card-icon">&#128295;</div><div class="card-body"><div class="card-name">/create-skill <span class="badge badge-blue">Custom</span></div><div class="card-desc">Creates new Claude Code skills following best-practice architecture patterns. Used to build all the custom skills above.</div><div class="card-benefit">Build new automations as reusable slash commands whenever you need a repeatable workflow.</div></div></div>
+</div>
+
+<div class="panel">
+  <div class="panel-title" style="color:var(--purple)">&#128230; Morningside AI &mdash; Enterprise AI Discovery <span class="badge badge-purple">7 skills</span></div>
+  <div class="panel-theme">Analyze AI automation opportunities for business audits -- from discovery interviews to executive presentations</div>
+  <div class="card" data-search="opportunity-scanner ai morningside discovery"><div class="card-bar" style="background:var(--purple)"></div><div class="card-icon">&#128161;</div><div class="card-body"><div class="card-name">/opportunity-scanner <span class="badge badge-purple">Morningside</span></div><div class="card-desc">Generates AI opportunity hypotheses -- finds where automation can save time and reduce errors in a business.</div><div class="card-benefit">Starting point for AI discovery with new clients -- gives you a structured list of opportunities.</div></div></div>
+  <div class="card" data-search="interview-builder stakeholder morningside discovery"><div class="card-bar" style="background:var(--purple)"></div><div class="card-icon">&#127908;</div><div class="card-body"><div class="card-name">/interview-builder <span class="badge badge-purple">Morningside</span></div><div class="card-desc">Creates customized interview guides for stakeholder discovery -- 4-phase scripts with role-specific questions.</div><div class="card-benefit">Walk into client interviews prepared with the right questions for each role.</div></div></div>
+  <div class="card" data-search="insight-analyzer transcript morningside discovery"><div class="card-bar" style="background:var(--purple)"></div><div class="card-icon">&#128202;</div><div class="card-body"><div class="card-name">/insight-analyzer <span class="badge badge-purple">Morningside</span></div><div class="card-desc">Processes interview transcripts into structured findings -- pain points, time burdens, AI opportunities, key quotes.</div><div class="card-benefit">Turn messy interview notes into actionable intelligence in minutes.</div></div></div>
+  <div class="card" data-search="department-synthesizer aggregate morningside discovery"><div class="card-bar" style="background:var(--purple)"></div><div class="card-icon">&#128209;</div><div class="card-body"><div class="card-name">/department-synthesizer <span class="badge badge-purple">Morningside</span></div><div class="card-desc">Aggregates multiple interview findings into a department-level synthesis with cross-interview patterns.</div><div class="card-benefit">See the big picture across all interviews in one department -- spot patterns humans miss.</div></div></div>
+  <div class="card" data-search="priority-ranker impact feasibility morningside discovery"><div class="card-bar" style="background:var(--purple)"></div><div class="card-icon">&#127919;</div><div class="card-body"><div class="card-name">/priority-ranker <span class="badge badge-purple">Morningside</span></div><div class="card-desc">Prioritizes AI opportunities using Impact x Feasibility scoring -- eliminates low-value items, ranks what matters.</div><div class="card-benefit">Know exactly which AI project to build first for maximum ROI.</div></div></div>
+  <div class="card" data-search="workflow-audit process morningside discovery"><div class="card-bar" style="background:var(--purple)"></div><div class="card-icon">&#128269;</div><div class="card-body"><div class="card-name">/workflow-audit <span class="badge badge-purple">Morningside</span></div><div class="card-desc">Audits a specific workflow to map how work gets done, where time is wasted, and what could be automated.</div><div class="card-benefit">Find bottlenecks and automation opportunities in any business process.</div></div></div>
+  <div class="card" data-search="executive-briefing presentation morningside discovery"><div class="card-bar" style="background:var(--purple)"></div><div class="card-icon">&#128188;</div><div class="card-body"><div class="card-name">/executive-briefing <span class="badge badge-purple">Morningside</span></div><div class="card-desc">Creates 7-slide executive presentation outlines with talking points and recommended next steps.</div><div class="card-benefit">Present AI findings to client leadership with a polished, persuasive deck.</div></div></div>
+</div>
+
+<div class="panel">
+  <div class="panel-title" style="color:var(--teal)">&#128736;&#65039; Nick Saraev &mdash; Reference Library <span class="badge badge-gray">26 patterns &bull; not active</span></div>
+  <div class="panel-theme">Code examples from Nick Saraev's course -- useful as reference when building new skills, not installed as slash commands</div>
+  <div class="subcat-title">Sales &amp; Leads (6)</div>
+  <div class="compact-grid">
+    <div class="compact-card" data-search="classify-leads sales saraev"><span class="compact-icon">&#127919;</span><span class="compact-name">classify-leads</span></div>
+    <div class="compact-card" data-search="gmaps-leads google maps sales saraev"><span class="compact-icon">&#128205;</span><span class="compact-name">gmaps-leads</span></div>
+    <div class="compact-card" data-search="scrape-leads scraper sales saraev"><span class="compact-icon">&#128375;</span><span class="compact-name">scrape-leads</span></div>
+    <div class="compact-card" data-search="create-proposal sales saraev"><span class="compact-icon">&#128196;</span><span class="compact-name">create-proposal</span></div>
+    <div class="compact-card" data-search="onboarding-kickoff client sales saraev"><span class="compact-icon">&#128640;</span><span class="compact-name">onboarding-kickoff</span></div>
+    <div class="compact-card" data-search="upwork-apply freelance sales saraev"><span class="compact-icon">&#128188;</span><span class="compact-name">upwork-apply</span></div>
+  </div>
+  <div class="subcat-title">Email (5)</div>
+  <div class="compact-grid">
+    <div class="compact-card" data-search="gmail-inbox email saraev"><span class="compact-icon">&#128233;</span><span class="compact-name">gmail-inbox</span></div>
+    <div class="compact-card" data-search="gmail-label email organize saraev"><span class="compact-icon">&#127991;&#65039;</span><span class="compact-name">gmail-label</span></div>
+    <div class="compact-card" data-search="instantly-autoreply cold email saraev"><span class="compact-icon">&#9889;</span><span class="compact-name">instantly-autoreply</span></div>
+    <div class="compact-card" data-search="instantly-campaigns cold email saraev"><span class="compact-icon">&#128231;</span><span class="compact-name">instantly-campaigns</span></div>
+    <div class="compact-card" data-search="welcome-email onboarding saraev"><span class="compact-icon">&#128140;</span><span class="compact-name">welcome-email</span></div>
+  </div>
+  <div class="subcat-title">Video &amp; YouTube (6)</div>
+  <div class="compact-grid">
+    <div class="compact-card" data-search="video-edit editing saraev"><span class="compact-icon">&#127909;</span><span class="compact-name">video-edit</span></div>
+    <div class="compact-card" data-search="youtube-outliers research saraev"><span class="compact-icon">&#128200;</span><span class="compact-name">youtube-outliers</span></div>
+    <div class="compact-card" data-search="cross-niche-outliers research saraev"><span class="compact-icon">&#128269;</span><span class="compact-name">cross-niche-outliers</span></div>
+    <div class="compact-card" data-search="recreate-thumbnails youtube saraev"><span class="compact-icon">&#128248;</span><span class="compact-name">recreate-thumbnails</span></div>
+    <div class="compact-card" data-search="pan-3d-transition video effect saraev"><span class="compact-icon">&#127916;</span><span class="compact-name">pan-3d-transition</span></div>
+    <div class="compact-card" data-search="title-variants youtube headline saraev"><span class="compact-icon">&#128221;</span><span class="compact-name">title-variants</span></div>
+  </div>
+  <div class="subcat-title">Community (2)</div>
+  <div class="compact-grid">
+    <div class="compact-card" data-search="skool-monitor community saraev"><span class="compact-icon">&#128172;</span><span class="compact-name">skool-monitor</span></div>
+    <div class="compact-card" data-search="skool-rag community knowledge saraev"><span class="compact-icon">&#129504;</span><span class="compact-name">skool-rag</span></div>
+  </div>
+  <div class="subcat-title">Deployment (4)</div>
+  <div class="compact-grid">
+    <div class="compact-card" data-search="add-webhook api deployment saraev"><span class="compact-icon">&#128268;</span><span class="compact-name">add-webhook</span></div>
+    <div class="compact-card" data-search="design-website frontend deployment saraev"><span class="compact-icon">&#127760;</span><span class="compact-name">design-website</span></div>
+    <div class="compact-card" data-search="local-server development deployment saraev"><span class="compact-icon">&#128421;</span><span class="compact-name">local-server</span></div>
+    <div class="compact-card" data-search="modal-deploy cloud deployment saraev"><span class="compact-icon">&#9729;&#65039;</span><span class="compact-name">modal-deploy</span></div>
+  </div>
+  <div class="subcat-title">Other (3)</div>
+  <div class="compact-grid">
+    <div class="compact-card" data-search="casualize-names text formatting saraev"><span class="compact-icon">&#128100;</span><span class="compact-name">casualize-names</span></div>
+    <div class="compact-card" data-search="generate-report analytics saraev"><span class="compact-icon">&#128202;</span><span class="compact-name">generate-report</span></div>
+    <div class="compact-card" data-search="literature-research academic saraev"><span class="compact-icon">&#128218;</span><span class="compact-name">literature-research</span></div>
+  </div>
+</div>
+</div>
+
+<!-- TAB 3: FUNCTIONS -->
+<div class="tab-content" id="tab-functions">
+<div class="panel">
+  <div class="panel-title">&#128268; MCP Connections &mdash; Live Service Bridges <span class="badge badge-teal" id="conn-count">10 services</span></div>
+  <div id="connGrid"></div>
+</div>
+<div class="panel">
+  <div class="panel-title">&#129302; How Claude Works For You</div>
+  <div class="card" data-search="skills slash commands how"><div class="card-bar" style="background:var(--blue)"></div><div class="card-icon">&#9889;</div><div class="card-body"><div class="card-name">Skills <span class="badge badge-blue">13 active</span></div><div class="card-desc"><strong>What:</strong> Reusable commands you trigger with a slash (like /linkedin-post). Each skill has specific instructions Claude follows every time.</div><div class="card-benefit"><strong>Where they live:</strong> ~/.claude/skills/ (6 Custom BeaverMind + 7 Morningside AI)</div><div class="card-note">&#128161; Think of skills like saved recipes -- you say "/linkedin-post" and Claude knows exactly what to do, every time.</div></div></div>
+  <div class="card" data-search="agents subagents workers how"><div class="card-bar" style="background:var(--purple)"></div><div class="card-icon">&#129489;</div><div class="card-body"><div class="card-name">Agents <span class="badge badge-purple">On-demand</span></div><div class="card-desc"><strong>What:</strong> One-off workers Claude launches for complex tasks. Unlike skills (reusable) or scheduled tasks (recurring), agents are spawned for a specific job and disappear when done.</div><div class="card-benefit"><strong>Where they live:</strong> They don't have a permanent home -- Claude creates them in the moment when a task needs parallel or isolated work.</div><div class="card-note">&#128161; Think of agents like hiring a freelancer for one job -- they do it, report back, and you move on.</div></div></div>
+  <div class="card" data-search="mcp connections external services how"><div class="card-bar" style="background:var(--teal)"></div><div class="card-icon">&#128268;</div><div class="card-body"><div class="card-name">MCP Connections <span class="badge badge-teal">10 services</span></div><div class="card-desc"><strong>What:</strong> Live bridges between Claude and your external tools. Each MCP lets Claude directly read/write to a service (Gmail, Slack, Supabase, etc.) without you copy-pasting.</div><div class="card-benefit"><strong>Active:</strong> Gmail, Calendar, Slack, Notion, Supabase, GitHub, Drive, n8n, GoHighLevel, ElevenLabs</div><div class="card-note">&#128161; MCPs are why Claude can "check your email" or "post to Slack" -- they're the hands Claude uses to touch your tools.</div></div></div>
+  <div class="card" data-search="memory claude.md context how"><div class="card-bar" style="background:var(--orange)"></div><div class="card-icon">&#129504;</div><div class="card-body"><div class="card-name">Memory System <span class="badge badge-orange">Always active</span></div><div class="card-desc"><strong>What:</strong> How Claude remembers who you are between conversations. Two layers: CLAUDE.md (project config) and Memory files (per-project notes).</div><div class="card-benefit"><strong>Where it lives:</strong> CLAUDE.md in Ruben HQ root + ~/.claude/projects/*/memory/MEMORY.md</div><div class="card-note">&#128161; CLAUDE.md is why Claude knows your tech stack, your clients, and your preferences without you repeating them every time.</div></div></div>
+  <div class="card" data-search="n8n automation workflows how"><div class="card-bar" style="background:var(--purple)"></div><div class="card-icon">&#9881;&#65039;</div><div class="card-body"><div class="card-name">n8n Workflows <span class="badge badge-purple">External</span></div><div class="card-desc"><strong>What:</strong> Visual automation tool running on your VPS. Connects apps with drag-and-drop workflows. Handles webhook triggers, API calls, and multi-step automations 24/7.</div><div class="card-benefit"><strong>Where it lives:</strong> Hostinger VPS at n8n.srv1401366.hstgr.cloud</div><div class="card-note">&#128161; n8n handles automations that need to run 24/7 independently (like webhook listeners), while Claude handles tasks that need intelligence.</div></div></div>
+</div>
+</div>
+
+<!-- TAB 4: HEALTH REPORT -->
+<div class="tab-content" id="tab-health">
+<div id="healthContent">
+  <div class="health-unavailable">
+    <h3>Loading health data...</h3>
+    <p>Fetching latest report from data.json</p>
+  </div>
+</div>
+</div>
+
+<div class="footer">Ruben HQ Operations Dashboard &bull; Last updated: <span id="footer-date"></span></div>
+
 <script>
-(function() {
-  var D = window.DASHBOARD_DATA;
+// === CONNECTIONS DATA (template-level, links don't change) ===
+var CONNECTIONS = [
+  {name:"Supabase",desc:"Database, real-time subscriptions, auth, edge functions",url:"https://supabase.com/dashboard/project/pvajjuxwygsaaaadxbob",icon:"&#128451;"},
+  {name:"GitHub",desc:"Code repos, version control, GitHub Pages hosting",url:"https://github.com/beavermindai",icon:"&#128025;"},
+  {name:"Notion",desc:"Workspace, docs, databases, CRM, project management",url:"https://notion.so",icon:"&#128221;"},
+  {name:"Slack",desc:"Team comms, notifications, automated reports (#reports)",url:"https://app.slack.com",icon:"&#128172;"},
+  {name:"Gmail",desc:"Email access -- read, search, draft, label",url:"https://mail.google.com",icon:"&#128231;"},
+  {name:"Google Calendar",desc:"Scheduling, event management, availability",url:"https://calendar.google.com",icon:"&#128197;"},
+  {name:"Google Drive",desc:"File storage, document management, report uploads",url:"https://drive.google.com",icon:"&#128193;"},
+  {name:"n8n",desc:"Workflow automation engine (Hostinger VPS, 11 workflows)",url:"https://n8n.srv1401366.hstgr.cloud",icon:"&#9881;&#65039;"},
+  {name:"GoHighLevel",desc:"CRM, sales pipeline, calendar booking, lead management",url:"https://app.gohighlevel.com",icon:"&#128200;"},
+  {name:"ElevenLabs",desc:"AI voice agents, call logs, usage analytics",url:"https://elevenlabs.io/app",icon:"&#127908;"}
+];
 
-  // --- Helpers ---
-  function esc(s) {
-    var d = document.createElement('div');
-    d.textContent = s;
-    return d.innerHTML;
-  }
+// === FOLDER DATA ===
+var folderData=[{name:"CLAUDE.md",icon:"\u2699\uFE0F",cat:"gray",desc:"Project configuration file -- tells Claude who you are, your tech stack, clients, team, and how to work with you. 160+ lines.",benefit:"This is why Claude understands your full context in every conversation. Must stay in Ruben HQ root -- never move it.",note:"Claude reads this automatically at the start of every session. Edit it whenever your context changes.",deps:["Claude Code (reads automatically)"]},{name:"Airbnb",icon:"\uD83C\uDFE0",cat:"teal",desc:"Phuket property management -- listing details, guest info, and rental operations.",benefit:"Everything for your Airbnb business in one place.",note:"Only 1 file (airbnb-phuket.md) -- this is just the reference doc. Actual guest reviews are handled by a scheduled task.",deps:["RD Consulting (accounting)"],children:[{name:"airbnb-phuket.md",icon:"\uD83D\uDCC4",cat:"teal",desc:"Property details, listing info, FazWaz lease, and management notes for the Kamala/Regent B304 unit.",benefit:"Quick reference when you need any property detail."}]},{name:"BeaverMind",icon:"\uD83E\uDDE0",cat:"blue",desc:"Your AI automation agency -- the core business. All client work, brand, contracts, and strategy live here.",benefit:"Single source of truth for everything BeaverMind. 8 subfolders covering every aspect of the business.",deps:["Claude Code (content skills read Context/)","RD Consulting (legal entity)"],open:true,children:[{name:"Clients",icon:"\uD83D\uDC65",cat:"blue",desc:"Client project folders and deliverables. Currently: Bryan Perry (active build), Andrea Grandi (live), Midax (on hold).",benefit:"Never lose track of what was delivered to whom.",note:"3 active/recent clients. Each gets their own subfolder with specs, call notes, and deliverables.",deps:["Contracts"]},{name:"Context",icon:"\uD83D\uDCCB",cat:"blue",desc:"10 files: brand voice, ICP profile, content strategy, team info, publishing playbook, Tone of Voice doc, and more.",benefit:"Claude reads these files to stay on-brand. Every LinkedIn post, email, and sales asset pulls from here.",note:"This is the most-referenced folder -- skills like /linkedin-post and /weekly-content-batch read from here automatically.",deps:["Claude Code skills","LinkedIn posts","YouTube content"]},{name:"Contracts",icon:"\uD83D\uDCDD",cat:"blue",desc:"Client and vendor contracts, agreements, and legal documents.",benefit:"All agreements in one place for quick reference."},{name:"Guidelines",icon:"\uD83C\uDFA8",cat:"blue",desc:"BeaverMind brand guidelines -- visual identity, colors, logo usage, and design standards.",benefit:"Keeps everything on-brand across website, social, and client materials."},{name:"Media",icon:"\uD83D\uDDBC\uFE0F",cat:"blue",desc:"Brand assets -- logos, images, headshots, and design files for marketing materials.",benefit:"Grab any brand asset instantly without asking a designer."},{name:"Questionnaire",icon:"\uD83D\uDCCA",cat:"blue",desc:"Client onboarding questionnaires -- sent to new clients to gather requirements before kickoff.",benefit:"Standardized intake means no detail gets missed during onboarding."},{name:"Website",icon:"\uD83C\uDF10",cat:"blue",desc:"BeaverMind website source files and content.",benefit:"Website updates stay organized separately from other business files."},{name:"beavermind-master-plan.md",icon:"\uD83D\uDCC4",cat:"blue",desc:"The 5-phase strategic plan created April 2026 -- agent build order, revenue targets, and priorities.",benefit:"Your north star document. Defines what to build and in what order."}]},{name:"Learning",icon:"\uD83D\uDCDA",cat:"purple",desc:"Reference materials and third-party skill repos. Course videos are archived on Google Drive.",benefit:"Keeps learning separate from active work. Only code references stay local.",note:"4 course folders (AAA, Hormozi, Gadzhi, Matt Gray) were moved to Google Drive to save disk space. Only Nick Saraev's code repo stays local.",children:[{name:"Nick Saraev Claude Skills",icon:"\uD83D\uDCBB",cat:"purple",desc:"Third-party Claude Code skill examples -- a git repo with 26 skill patterns for sales, email, video, deployment, and more.",benefit:"Reference and inspiration when building new custom skills.",note:"This is a code repo (not a course). Kept local so Claude can read and analyze the patterns.",deps:["Claude Code skills"]}]},{name:"Personal",icon:"\uD83D\uDC64",cat:"green",desc:"Personal life -- identity documents, finances, travel, and private interests. Recently reorganized into 3 clean subfolders + 4 interest folders.",benefit:"Personal life is organized and completely separate from business.",open:true,children:[{name:"Documents",icon:"\uD83D\uDCC1",cat:"green",desc:"47 files: passport (multiple formats), Italian ID, driver license, Thai visa, insurance, lease agreements, 1Password kits, and misc personal papers.",benefit:"All important personal paperwork in one place -- passport, ID, visa, insurance, everything."},{name:"Finance",icon:"\uD83D\uDCC1",cat:"green",desc:"6 items: N26 bank statements, Italian tax documents (INPS F24, Partita IVA folder, RPF23), and a Books.numbers file.",benefit:"Tax time and financial reviews become painless -- everything your Italian accountant needs."},{name:"Travel",icon:"\uD83D\uDCC1",cat:"green",desc:"4 files: Istanbul travel guides and walking route maps from November 2024.",benefit:"Trip planning materials organized separately from documents."},{name:"Dusan Trump",icon:"\uD83D\uDCC1",cat:"green",desc:"Personal interest -- research materials and notes (31 files).",benefit:"Private reference material."},{name:"Marcello",icon:"\uD83D\uDCC1",cat:"green",desc:"Personal files related to Marcello (8 files).",benefit:"Private reference material."},{name:"Randy Cramer",icon:"\uD83D\uDCC1",cat:"green",desc:"Personal interest -- research and notes (6 files).",benefit:"Private reference material."},{name:"Libri messaggi ET",icon:"\uD83D\uDCC1",cat:"green",desc:"Personal interest -- book collection and notes (6 files).",benefit:"Private reference material."}]},{name:"Projects",icon:"\u26A1",cat:"purple",desc:"Code projects and technical tools. Currently 2 projects -- one active, one paused.",benefit:"All technical/development work lives here, cleanly separated from business operations.",open:true,children:[{name:"mission-control",icon:"\uD83D\uDDA5\uFE0F",cat:"purple",desc:"Next.js + Supabase dashboard app -- your personal command center. Full codebase with components, pages, and API routes.",benefit:"Will become your central hub once Second Brain feeds data into it. Currently paused to focus on Second Brain first.",note:"Paused -- not abandoned. Second Brain needs to be functional before this dashboard has useful data to display.",deps:["Supabase","Second Brain"],status:"paused"},{name:"Second Brain",icon:"\uD83E\uDDE0",cat:"purple",desc:"Supabase + n8n knowledge base -- 7 files including schema.sql, deploy scripts, and n8n workflow JSON.",benefit:"Your digital memory system -- will capture and organize everything you learn and interact with daily.",note:"Active project. Originally part of Mission Control, now standalone.",deps:["Supabase","n8n","Claude Code memory"],status:"active"}]},{name:"RD Consulting - Hong Kong",icon:"\uD83C\uDFE2",cat:"orange",desc:"Your active HK company -- recently restructured into 7 clean subfolders for tax, invoices, and compliance.",benefit:"Corporate obligations organized and audit-ready. Your accountant can find anything instantly.",deps:["BeaverMind (operates through this entity)","Airbnb (accounting)"],children:[{name:"Company Documents",icon:"\uD83D\uDCC1",cat:"orange",desc:"Incorporation certificate, business registration, KYC, lease agreement, Currenxie setup, flowcharts.",benefit:"All foundational company paperwork -- needed for banking, compliance, and renewals."},{name:"Tax Returns",icon:"\uD83D\uDCC1",cat:"orange",desc:"HK tax returns (2022-2023), MONX personal tax requests, business registration renewal, RD Consulting audit.",benefit:"Everything your accountant needs for filing and audits."},{name:"Bank Statements",icon:"\uD83D\uDCC1",cat:"orange",desc:"Currenxie exports (HKD + USD), HSBC statements, business expense summaries.",benefit:"Financial records for accounting and audit -- all in one place."},{name:"Invoices 22-23",icon:"\uD83D\uDCC1",cat:"orange",desc:"Client invoices and expense receipts for fiscal year 2022-2023.",benefit:"Historical records -- HK requires 7-year document retention."},{name:"Invoices 23-24",icon:"\uD83D\uDCC1",cat:"orange",desc:"187 files: client invoices, cash expenses, and receipts for fiscal year 2023-2024.",benefit:"Historical records -- the busiest year of invoicing (Tradacc era).",note:"187 files because this was peak Tradacc revenue year with many SaaS subscriptions."},{name:"Invoices 24-25",icon:"\uD83D\uDCC1",cat:"orange",desc:"Current year invoices and expenses -- actively updated by the daily-invoice-processor scheduled task.",benefit:"Current year financials. Auto-updated daily by Claude.",note:"This folder is actively managed by the daily-invoice-processor automation.",deps:["daily-invoice-processor"]},{name:"Audit 24-25",icon:"\uD83D\uDCC1",cat:"orange",desc:"13 documents specifically requested by auditors for the 2024-2025 review.",benefit:"Pre-organized audit pack -- saves hours when auditors request documents."}]},{name:"FOLDER-MAP.html",icon:"\uD83D\uDDFA\uFE0F",cat:"gray",desc:"This dashboard -- interactive visual map of your entire operational system.",benefit:"Always know where everything is, what's running, and what each piece does."},{name:"data.json",icon:"\uD83D\uDCC4",cat:"gray",desc:"Live health data file -- updated daily by the automated health check system.",benefit:"Feeds the Health Report tab with fresh data every day."}];
 
-  // --- Theme ---
-  var html = document.documentElement;
-  var toggle = document.getElementById('themeToggle');
-  var savedTheme = localStorage.getItem('ops-dash-theme');
-  if (savedTheme) html.setAttribute('data-theme', savedTheme);
-  function updateToggleIcon() {
-    toggle.innerHTML = html.getAttribute('data-theme') === 'dark' ? '&#9788;' : '&#9790;';
-  }
-  updateToggleIcon();
-  toggle.addEventListener('click', function() {
-    var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    html.setAttribute('data-theme', next);
-    localStorage.setItem('ops-dash-theme', next);
-    updateToggleIcon();
+// === RENDER FUNCTIONS ===
+
+function renderTree(items,container){items.forEach(function(item){var el=document.createElement('div');el.className='folder'+(item.open?' open':'');el.dataset.name=(item.name||'').toLowerCase();el.dataset.desc=((item.desc||'')+(item.note||'')+(item.benefit||'')).toLowerCase();var hasChildren=item.children&&item.children.length>0;var badges='';if(item.deps)badges=item.deps.map(function(d){var c='badge-gray';if(/supabase|n8n|claude|second brain/i.test(d))c='badge-purple';if(/beavermind|contract|client|linkedin|youtube/i.test(d))c='badge-blue';if(/rd consulting|accounting|invoice/i.test(d))c='badge-orange';return'<span class="badge '+c+'">&#128279; '+d+'</span>'}).join(' ');if(item.status==='paused')badges+=' <span class="badge badge-orange">&#9199; Paused</span>';if(item.status==='active')badges+=' <span class="badge badge-green">&#9679; Active</span>';el.innerHTML='<div class="folder-header" onclick="toggle(this.parentElement)">'+(hasChildren?'<span class="folder-chevron">&#9654;</span>':'<span class="folder-chevron" style="visibility:hidden">&#9654;</span>')+'<div class="card-bar" style="background:var(--'+item.cat+')"></div><span class="card-icon">'+item.icon+'</span><div class="card-body"><div class="card-name">'+item.name+(badges?' '+badges:'')+'</div><div class="card-desc">'+item.desc+'</div>'+(item.benefit?'<div class="card-benefit">'+item.benefit+'</div>':'')+(item.note?'<div class="card-note">&#128221; '+item.note+'</div>':'')+'</div></div>';if(hasChildren){var ch=document.createElement('div');ch.className='folder-children';renderTree(item.children,ch);el.appendChild(ch)}container.appendChild(el)})}
+
+function toggle(el){el.classList.toggle('open')}
+function expandAll(){document.querySelectorAll('#tree .folder').forEach(function(f){f.classList.add('open')})}
+function collapseAll(){document.querySelectorAll('#tree .folder').forEach(function(f){f.classList.remove('open')})}
+
+function showTab(id){document.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active')});document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});document.getElementById('tab-'+id).classList.add('active');event.target.classList.add('active')}
+
+function searchAll(q){q=q.toLowerCase().trim();
+document.querySelectorAll('#tree .folder').forEach(function(f){if(!q){f.classList.remove('hidden');return}var n=f.dataset.name||'';var d=f.dataset.desc||'';var m=n.includes(q)||d.includes(q);var hvc=Array.from(f.querySelectorAll('.folder')).some(function(c){return(c.dataset.name||'').includes(q)||(c.dataset.desc||'').includes(q)});if(m||hvc){f.classList.remove('hidden');if(hvc)f.classList.add('open')}else f.classList.add('hidden')});
+document.querySelectorAll('.card,.compact-card,.conn-card,.mcp-chip,.platform-row,.table-row,.rec-item,.history-row').forEach(function(c){if(!q){c.classList.remove('hidden');return}var s=(c.dataset.search||'')+' '+(c.textContent||'');c.classList.toggle('hidden',!s.toLowerCase().includes(q))})}
+
+function toggleTheme(){var b=document.body;var btn=document.querySelector('.theme-toggle');if(b.dataset.theme==='dark'){b.removeAttribute('data-theme');btn.innerHTML='&#127769; Dark'}else{b.dataset.theme='dark';btn.innerHTML='&#9728;&#65039; Light'}}
+
+// === RENDER CONNECTIONS ===
+function renderConnections(statusMap){
+  var el=document.getElementById('connGrid');
+  var html='';
+  CONNECTIONS.forEach(function(c){
+    var status=statusMap[c.name]||'unknown';
+    html+='<div class="conn-card" data-search="'+c.name.toLowerCase()+' '+c.desc.toLowerCase()+'">'
+      +'<span class="conn-dot '+status+'"></span>'
+      +'<div class="conn-body">'
+      +'<div class="conn-name"><a href="'+c.url+'" target="_blank" rel="noopener">'+c.name+'</a></div>'
+      +'<div class="conn-desc">'+c.desc+'</div>'
+      +'</div></div>';
   });
+  el.innerHTML=html;
+}
 
-  // --- Header ---
-  var badge = document.getElementById('healthBadge');
-  badge.textContent = D.healthScore;
-  badge.className = 'health-badge ' + D.healthStatus;
-
-  var ts = new Date(D.generatedAt);
-  document.getElementById('headerTimestamp').textContent = 'Generated: ' + ts.toLocaleString();
-  document.getElementById('headerAge').textContent = 'Data age: ' + D.localDataAge;
-
-  if (D.localDataAge && (/hour|day/i.test(D.localDataAge))) {
-    var sw = document.getElementById('staleWarning');
-    sw.style.display = 'inline-flex';
-    sw.textContent = '\u26a0 Data may be stale';
+// === RENDER HEALTH REPORT ===
+function renderHealth(data){
+  var el=document.getElementById('healthContent');
+  if(!data||!data.healthReport){
+    el.innerHTML='<div class="health-unavailable"><h3>Health data unavailable</h3><p>No data.json found or data is empty. The health check system will populate this automatically.</p></div>';
+    return;
   }
+  var h=data.healthReport;
+  var statusClass=h.healthScore>=8?'healthy':h.healthScore>=5?'warning':'critical';
+  var statusLabel=h.healthScore>=8?'Healthy':h.healthScore>=5?'Warning':'Critical';
 
-  // --- Tabs ---
-  document.getElementById('tabNav').addEventListener('click', function(e) {
-    if (!e.target.classList.contains('tab')) return;
-    var tabs = document.querySelectorAll('.tab');
-    var contents = document.querySelectorAll('.tab-content');
-    for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove('active');
-    for (var i = 0; i < contents.length; i++) contents[i].classList.remove('active');
-    e.target.classList.add('active');
-    document.getElementById('tab-' + e.target.getAttribute('data-tab')).classList.add('active');
-  });
+  var html='<div class="panel"><div class="health-hero">'
+    +'<div class="health-circle '+statusClass+'">'+h.healthScore+'</div>'
+    +'<div class="health-info"><h2>System '+statusLabel+'</h2>'
+    +'<p>Generated: '+new Date(data.generatedAt).toLocaleString()+'</p>'
+    +(h.localDataAge?'<p>Local data age: '+h.localDataAge+'</p>':'')
+    +'</div></div></div>';
 
-  // --- Platforms ---
-  var platformNames = { n8n_vps: 'n8n VPS', local_tasks: 'Local Tasks', apps_script: 'Apps Script' };
-  var plEl = document.getElementById('platformList');
-  var plHTML = '';
-  for (var key in D.platforms) {
-    if (!D.platforms.hasOwnProperty(key)) continue;
-    var v = D.platforms[key];
-    var pn = platformNames[key] || key;
-    plHTML += '<div class="platform-row" data-search="' + esc(pn.toLowerCase() + ' ' + v.summary.toLowerCase()) + '">' +
-      '<span class="status-dot ' + esc(v.status) + '"></span>' +
-      '<span class="platform-name">' + esc(pn) + '</span>' +
-      '<span class="platform-summary">' + esc(v.summary) + '</span></div>';
-  }
-  plEl.innerHTML = plHTML;
-
-  // --- Supabase ---
-  var sbEl = document.getElementById('supabaseList');
-  var sbHTML = '';
-  for (var name in D.supabaseTables) {
-    if (!D.supabaseTables.hasOwnProperty(name)) continue;
-    sbHTML += '<div class="table-row" data-search="' + esc(name.toLowerCase()) + '">' +
-      '<span>' + esc(name) + '</span>' +
-      '<span class="table-count">' + D.supabaseTables[name] + ' rows</span></div>';
-  }
-  sbEl.innerHTML = sbHTML;
-
-  // --- MCP ---
-  var mcpEl = document.getElementById('mcpGrid');
-  var mcpHTML = '';
-  for (var i = 0; i < D.mcpConnections.length; i++) {
-    var c = D.mcpConnections[i];
-    mcpHTML += '<div class="mcp-item" data-search="' + esc(c.name.toLowerCase()) + '">' +
-      '<span class="status-dot ' + esc(c.status) + '"></span>' +
-      '<span>' + esc(c.name) + '</span></div>';
-  }
-  mcpEl.innerHTML = mcpHTML;
-
-  // --- Recommendations ---
-  var recEl = document.getElementById('recList');
-  var recHTML = '';
-  for (var i = 0; i < D.recommendations.length; i++) {
-    recHTML += '<div class="rec-item" data-search="' + esc(D.recommendations[i].toLowerCase()) + '">' +
-      '<span class="rec-icon">\u26a0</span>' +
-      '<span>' + esc(D.recommendations[i]) + '</span></div>';
-  }
-  recEl.innerHTML = recHTML;
-
-  // --- Workflows ---
-  var wfEl = document.getElementById('workflowList');
-  var categories = {};
-  var catOrder = [];
-  for (var i = 0; i < D.workflows.length; i++) {
-    var w = D.workflows[i];
-    if (!categories[w.category]) {
-      categories[w.category] = [];
-      catOrder.push(w.category);
+  // Platforms
+  if(h.platforms){
+    var platformNames={n8n_vps:'n8n VPS',local_tasks:'Local Tasks',apps_script:'Apps Script'};
+    var platformUrls={n8n_vps:'https://n8n.srv1401366.hstgr.cloud',local_tasks:null,apps_script:'https://script.google.com'};
+    html+='<div class="panel"><div class="panel-title">Automation Platforms</div>';
+    for(var key in h.platforms){
+      if(!h.platforms.hasOwnProperty(key))continue;
+      var p=h.platforms[key];
+      var pn=platformNames[key]||key;
+      var pu=platformUrls[key];
+      html+='<div class="platform-row" data-search="'+pn.toLowerCase()+' '+p.summary.toLowerCase()+'">'
+        +'<span class="platform-dot '+(p.status||'unknown')+'"></span>'
+        +'<span class="platform-name">'+(pu?'<a href="'+pu+'" target="_blank" rel="noopener">'+pn+'</a>':pn)+'</span>'
+        +'<span class="platform-summary">'+p.summary+'</span></div>';
     }
-    categories[w.category].push(w);
+    html+='</div>';
   }
 
-  var wfHTML = '';
-  for (var ci = 0; ci < catOrder.length; ci++) {
-    var cat = catOrder[ci];
-    var items = categories[cat];
-    wfHTML += '<div class="category-group">';
-    wfHTML += '<div class="category-header">' + esc(cat) + ' <span style="font-weight:400;color:var(--text-tertiary);font-size:11px;">(' + items.length + ')</span></div>';
-    for (var j = 0; j < items.length; j++) {
-      var w = items[j];
-      var id = 'wf-' + ci + '-' + j;
-      wfHTML += '<div class="asset-row" data-search="' + esc(w.name.toLowerCase() + ' ' + w.description.toLowerCase() + ' ' + w.category.toLowerCase()) + '" data-toggle="' + id + '">' +
-        '<span class="chevron" id="chev-' + id + '">\u25b8</span>' +
-        '<span class="asset-name">' + esc(w.name) + '</span>' +
-        '<span class="asset-badge ' + (w.active ? 'active' : 'inactive') + '">' + (w.active ? 'active' : 'inactive') + '</span></div>' +
-        '<div class="asset-desc" id="' + id + '">' + esc(w.description) + '</div>';
-    }
-    wfHTML += '</div>';
+  // MCP Grid
+  if(h.mcpConnections&&h.mcpConnections.length){
+    html+='<div class="panel"><div class="panel-title">MCP Connection Status</div><div class="mcp-grid">';
+    var connUrlMap={};
+    CONNECTIONS.forEach(function(c){connUrlMap[c.name]=c.url});
+    h.mcpConnections.forEach(function(c){
+      var url=c.url||connUrlMap[c.name]||'#';
+      html+='<div class="mcp-chip" data-search="'+c.name.toLowerCase()+'">'
+        +'<span class="mcp-dot '+(c.status||'unknown')+'"></span>'
+        +'<a href="'+url+'" target="_blank" rel="noopener">'+c.name+'</a></div>';
+    });
+    html+='</div></div>';
   }
-  wfEl.innerHTML = wfHTML;
 
-  // --- Skills ---
-  var skEl = document.getElementById('skillList');
-  var skHTML = '';
-  for (var i = 0; i < D.skills.length; i++) {
-    var s = D.skills[i];
-    var id = 'sk-' + i;
-    skHTML += '<div class="asset-row" data-search="' + esc(s.name.toLowerCase() + ' ' + s.description.toLowerCase()) + '" data-toggle="' + id + '">' +
-      '<span class="chevron" id="chev-' + id + '">\u25b8</span>' +
-      '<span class="asset-name">' + esc(s.name) + '</span>' +
-      '<span class="asset-badge skill">skill</span></div>' +
-      '<div class="asset-desc" id="' + id + '">' + esc(s.description) + '</div>';
+  // Supabase Tables
+  if(h.supabaseTables){
+    var tables=h.supabaseTables;
+    var tableNames=Object.keys(tables).sort();
+    var totalRows=0;
+    tableNames.forEach(function(t){totalRows+=tables[t]});
+    html+='<div class="panel"><div class="panel-title"><a href="https://supabase.com/dashboard/project/pvajjuxwygsaaaadxbob" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">Supabase Tables</a> <span class="badge badge-teal">'+tableNames.length+' tables &bull; '+totalRows+' rows</span></div><div class="table-grid">';
+    tableNames.forEach(function(t){
+      html+='<div class="table-row" data-search="'+t+'"><span>'+t+'</span><span class="table-count">'+tables[t]+'</span></div>';
+    });
+    html+='</div></div>';
   }
-  skEl.innerHTML = skHTML;
 
-  // --- Scheduled Tasks ---
-  var stEl = document.getElementById('taskList');
-  var stHTML = '';
-  for (var i = 0; i < D.scheduledTasks.length; i++) {
-    var t = D.scheduledTasks[i];
-    var id = 'st-' + i;
-    stHTML += '<div class="asset-row" data-search="' + esc(t.name.toLowerCase() + ' ' + t.schedule.toLowerCase() + ' ' + t.platform.toLowerCase()) + '" data-toggle="' + id + '">' +
-      '<span class="chevron" id="chev-' + id + '">\u25b8</span>' +
-      '<span class="asset-name">' + esc(t.name) + '</span>' +
-      '<span class="asset-badge task">' + esc(t.status) + '</span></div>' +
-      '<div class="asset-desc" id="' + id + '">' + esc(t.schedule) + ' \u2014 ' + esc(t.platform) + '</div>';
+  // Recommendations
+  if(h.recommendations&&h.recommendations.length){
+    html+='<div class="panel"><div class="panel-title">Recommendations</div>';
+    h.recommendations.forEach(function(r){
+      html+='<div class="rec-item" data-search="'+r.toLowerCase()+'"><span class="rec-icon">&#9888;&#65039;</span><span>'+r+'</span></div>';
+    });
+    html+='</div>';
   }
-  stEl.innerHTML = stHTML;
 
-  // --- Click-to-expand ---
-  document.addEventListener('click', function(e) {
-    var row = e.target.closest('.asset-row');
-    if (!row) return;
-    var toggleId = row.getAttribute('data-toggle');
-    if (!toggleId) return;
-    var desc = document.getElementById(toggleId);
-    var chev = document.getElementById('chev-' + toggleId);
-    if (desc) desc.classList.toggle('open');
-    if (chev) chev.classList.toggle('open');
-  });
-
-  // --- Folder Tree ---
-  var ftEl = document.getElementById('folderTree');
-  function renderTree(node, depth) {
-    var isRoot = depth === 0;
-    var h = '<div class="tree-node' + (isRoot ? ' tree-root' : '') + '" style="padding-left:' + (isRoot ? 0 : depth * 16) + 'px" data-search="' + esc(node.name.toLowerCase()) + '">' +
-      '<div class="tree-label">' +
-      '<span class="tree-icon">' + (node.children ? '\ud83d\udcc1' : '\ud83d\udcc4') + '</span>' +
-      '<span>' + esc(node.name) + '</span>' +
-      (node.fileCount !== undefined ? '<span class="tree-count">(' + node.fileCount + ' files)</span>' : '') +
-      '</div>';
-    if (node.children) {
-      for (var i = 0; i < node.children.length; i++) {
-        h += renderTree(node.children[i], depth + 1);
-      }
-    }
-    h += '</div>';
-    return h;
+  // History
+  if(h.history&&h.history.length){
+    html+='<div class="panel"><div class="panel-title">Report History <span class="badge badge-gray">Last '+h.history.length+'</span></div>';
+    h.history.forEach(function(r){
+      var bg=r.score>=8?'var(--green)':r.score>=5?'var(--orange)':'var(--red)';
+      html+='<div class="history-row" data-search="'+r.date+' '+r.summary.toLowerCase()+'">'
+        +'<div class="history-score" style="background:'+bg+'">'+r.score+'</div>'
+        +'<span class="history-date">'+r.date+'</span>'
+        +'<span class="history-summary">'+r.summary+'</span></div>';
+    });
+    html+='</div>';
   }
-  ftEl.innerHTML = renderTree(D.folderTree, 0);
 
-  // --- History ---
-  var hEl = document.getElementById('historyList');
-  var hHTML = '';
-  for (var i = 0; i < D.history.length; i++) {
-    var h = D.history[i];
-    var bg = h.score >= 8 ? 'var(--green)' : h.score >= 6 ? 'var(--yellow)' : 'var(--red)';
-    var txtColor = (h.score >= 6 && h.score < 8) ? 'var(--text)' : '#fff';
-    hHTML += '<div class="history-row" data-search="' + esc(h.date + ' ' + h.summary.toLowerCase()) + '">' +
-      '<div class="history-score" style="background:' + bg + ';color:' + txtColor + '">' + h.score + '</div>' +
-      '<span class="history-date">' + esc(h.date) + '</span>' +
-      '<span class="history-summary">' + esc(h.summary) + '</span></div>';
+  el.innerHTML=html;
+
+  // Update header stat
+  document.getElementById('health-stat').style.display='';
+  document.getElementById('health-score-mini').textContent=h.healthScore;
+}
+
+// === INIT ===
+renderTree(folderData,document.getElementById('tree'));
+
+var now=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+document.getElementById('update-date').textContent=now;
+document.getElementById('footer-date').textContent=now;
+
+// Render connections with default unknown status, then update from data.json
+renderConnections({});
+
+// Load health data from data.json
+fetch('./data.json').then(function(r){
+  if(!r.ok)throw new Error('Not found');
+  return r.json();
+}).then(function(data){
+  renderHealth(data);
+  // Update connection status dots from live data
+  if(data.healthReport&&data.healthReport.mcpConnections){
+    var statusMap={};
+    data.healthReport.mcpConnections.forEach(function(c){statusMap[c.name]=c.status});
+    renderConnections(statusMap);
   }
-  hEl.innerHTML = hHTML;
-
-  // --- Search ---
-  var searchInput = document.getElementById('searchInput');
-  var noResults = document.getElementById('noResults');
-
-  searchInput.addEventListener('input', function() {
-    var q = searchInput.value.toLowerCase().trim();
-    var allSearchable = document.querySelectorAll('[data-search]');
-    var visCount = 0;
-
-    for (var i = 0; i < allSearchable.length; i++) {
-      var el = allSearchable[i];
-      if (!q) {
-        el.classList.remove('search-hidden');
-        visCount++;
-        continue;
-      }
-      var text = el.getAttribute('data-search');
-      if (text.indexOf(q) !== -1) {
-        el.classList.remove('search-hidden');
-        visCount++;
-      } else {
-        el.classList.add('search-hidden');
-      }
-    }
-
-    noResults.style.display = (q && visCount === 0) ? 'block' : 'none';
-  });
-
-  // Keyboard shortcut: / to focus search
-  document.addEventListener('keydown', function(e) {
-    if (e.key === '/' && document.activeElement !== searchInput) {
-      e.preventDefault();
-      searchInput.focus();
-    }
-    if (e.key === 'Escape' && document.activeElement === searchInput) {
-      searchInput.value = '';
-      searchInput.dispatchEvent(new Event('input'));
-      searchInput.blur();
-    }
-  });
-})();
+  // Update stats from data
+  if(data.stats){
+    // Stats are in the template already but could be updated dynamically here
+  }
+}).catch(function(err){
+  renderHealth(null);
+  console.log('data.json not available:',err.message);
+});
 </script>
 </body>
 </html>
