@@ -1,47 +1,64 @@
 {
-  "generatedAt": "2026-04-08T08:00:00Z",
+  "generatedAt": "2026-04-08T21:02:38.066Z",
   "healthReport": {
-    "healthScore": 7,
-    "healthStatus": "warning",
-    "localDataAge": "15 minutes",
+    "healthScore": 4,
+    "healthStatus": "critical",
+    "localDataAge": "49 minutes ago",
     "platforms": {
-      "n8n_vps": { "status": "operational", "summary": "11 workflows, 10 active, 0 failures in 24h", "url": "https://n8n.srv1401366.hstgr.cloud" },
-      "local_tasks": { "status": "operational", "summary": "Local sync running, last sync 15min ago", "url": null },
-      "apps_script": { "status": "operational", "summary": "KPI daily report running", "url": "https://script.google.com" }
+      "n8n_vps": {
+        "status": "critical",
+        "summary": "45 failed executions in 24h, multiple workflows failing repeatedly"
+      },
+      "local_tasks": {
+        "status": "operational",
+        "summary": "Fresh data (49min old), all MCP connections working, 9 skills available"
+      },
+      "apps_script": {
+        "status": "degraded",
+        "summary": "Last run yesterday, potentially stale daily tasks"
+      }
     },
     "mcpConnections": [
-      { "name": "Supabase", "status": "working", "url": "https://supabase.com/dashboard/project/pvajjuxwygsaaaadxbob" },
-      { "name": "GitHub", "status": "working", "url": "https://github.com/beavermindai" },
-      { "name": "Notion", "status": "working", "url": "https://notion.so" },
-      { "name": "Slack", "status": "working", "url": "https://app.slack.com" },
-      { "name": "Gmail", "status": "working", "url": "https://mail.google.com" },
-      { "name": "Calendar", "status": "working", "url": "https://calendar.google.com" },
-      { "name": "Drive", "status": "error", "url": "https://drive.google.com" },
-      { "name": "n8n", "status": "working", "url": "https://n8n.srv1401366.hstgr.cloud" },
-      { "name": "GoHighLevel", "status": "working", "url": "https://app.gohighlevel.com" },
-      { "name": "ElevenLabs", "status": "working", "url": "https://elevenlabs.io/app" }
+      {
+        "name": "Gmail",
+        "status": "working"
+      },
+      {
+        "name": "Google Calendar",
+        "status": "working"
+      },
+      {
+        "name": "Slack",
+        "status": "working"
+      },
+      {
+        "name": "Notion",
+        "status": "working"
+      },
+      {
+        "name": "Supabase",
+        "status": "working"
+      },
+      {
+        "name": "GitHub",
+        "status": "working"
+      },
+      {
+        "name": "Google Drive",
+        "status": "working"
+      }
     ],
-    "supabaseTables": {
-      "agents": 6, "elevenlabs_agents": 13, "elevenlabs_calls": 30, "elevenlabs_usage": 1,
-      "clients": 3, "ghl_leads": 3, "memories": 80, "health_check_snapshots": 1,
-      "tasks": 5, "content_posts": 1, "execution_logs": 6, "oauth_tokens": 1,
-      "messages": 3, "chat_conversations": 1, "chat_messages": 4, "contacts": 0,
-      "agent_metrics": 0, "agent_reflections": 0, "case_studies": 0, "content_topics": 1,
-      "daily_briefs": 0, "linkedin_agency_reports": 0, "opportunities": 0,
-      "outreach_prospects": 0, "projects": 0, "prospect_briefings": 0, "youtube_topics": 1
-    },
+    "supabaseTables": {},
     "recommendations": [
-      "Fix Google Drive MCP connection -- currently returning errors",
-      "Import and activate Daily Health Check n8n workflow on VPS",
-      "Run first local sync task to establish baseline monitoring data"
+      "Fix ElevenLabs Call Logs Sync immediately",
+      "Debug GHL to Supabase connection issues",
+      "Review and restart Apps Script daily tasks"
     ],
-    "history": [
-      { "date": "2026-04-08", "score": 7, "summary": "First health report -- Drive MCP error, all other systems operational" }
-    ]
+    "history": []
   },
   "stats": {
     "areas": 7,
-    "skills": 39,
-    "connections": 10
+    "skills": 9,
+    "connections": 7
   }
 }
