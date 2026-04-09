@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-04-08T21:02:38.066Z",
+  "generatedAt": "2026-04-09T06:00:40.489Z",
   "healthReport": {
     "healthScore": 4,
     "healthStatus": "critical",
-    "localDataAge": "49 minutes ago",
+    "localDataAge": "313 minutes ago",
     "platforms": {
       "n8n_vps": {
-        "status": "critical",
-        "summary": "45 failed executions in 24h, multiple workflows failing repeatedly"
+        "status": "degraded",
+        "summary": "12 active workflows, 44 failures in 24h, ElevenLabs systems failing"
       },
       "local_tasks": {
-        "status": "operational",
-        "summary": "Fresh data (49min old), all MCP connections working, 9 skills available"
+        "status": "degraded",
+        "summary": "Data stale (5+ hours old), 1 confirmed task running"
       },
       "apps_script": {
-        "status": "degraded",
-        "summary": "Last run yesterday, potentially stale daily tasks"
+        "status": "operational",
+        "summary": "Ran successfully today"
       }
     },
     "mcpConnections": [
@@ -41,24 +41,25 @@
       },
       {
         "name": "GitHub",
-        "status": "working"
+        "status": "unknown"
       },
       {
         "name": "Google Drive",
-        "status": "working"
+        "status": "unknown"
       }
     ],
     "supabaseTables": {},
     "recommendations": [
-      "Fix ElevenLabs Call Logs Sync immediately",
-      "Debug GHL to Supabase connection issues",
-      "Review and restart Apps Script daily tasks"
+      "URGENT: Fix ElevenLabs API connections - all 3 workflows failing",
+      "Restart local sync process to get current system data",
+      "Check Drive Report Monitor API permissions",
+      "Clean up extra files in root directory"
     ],
     "history": []
   },
   "stats": {
     "areas": 7,
-    "skills": 9,
+    "skills": 8,
     "connections": 7
   }
 }
