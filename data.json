@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-04-09T06:00:40.489Z",
+  "generatedAt": "2026-04-10T06:00:42.467Z",
   "healthReport": {
     "healthScore": 4,
     "healthStatus": "critical",
-    "localDataAge": "313 minutes ago",
+    "localDataAge": "5 hours 11 minutes ago",
     "platforms": {
       "n8n_vps": {
         "status": "degraded",
-        "summary": "12 active workflows, 44 failures in 24h, ElevenLabs systems failing"
+        "summary": "49 failures in 24h, ElevenLabs workflows failing continuously"
       },
       "local_tasks": {
-        "status": "degraded",
-        "summary": "Data stale (5+ hours old), 1 confirmed task running"
+        "status": "warning",
+        "summary": "Data 5+ hours stale, 7 skills available, 6/7 MCP connections working"
       },
       "apps_script": {
         "status": "operational",
-        "summary": "Ran successfully today"
+        "summary": "Ran today successfully"
       }
     },
     "mcpConnections": [
@@ -40,26 +40,27 @@
         "status": "working"
       },
       {
-        "name": "GitHub",
-        "status": "unknown"
+        "name": "Google Drive",
+        "status": "working"
       },
       {
-        "name": "Google Drive",
-        "status": "unknown"
+        "name": "GitHub",
+        "status": "error"
       }
     ],
     "supabaseTables": {},
     "recommendations": [
-      "URGENT: Fix ElevenLabs API connections - all 3 workflows failing",
-      "Restart local sync process to get current system data",
-      "Check Drive Report Monitor API permissions",
-      "Clean up extra files in root directory"
+      "Fix ElevenLabs API credentials/rate limits immediately",
+      "Restart local data sync - 5+ hours behind",
+      "Review 18 inactive workflows for reactivation",
+      "Install GitHub CLI for complete MCP coverage",
+      "Organize root folder files into subfolders"
     ],
     "history": []
   },
   "stats": {
     "areas": 7,
-    "skills": 8,
+    "skills": 7,
     "connections": 7
   }
 }
