@@ -1,32 +1,250 @@
 {
-  "generatedAt": "2026-04-13T19:49:42.200Z",
+  "generatedAt": "2026-04-13T20:13:51.648Z",
   "healthReport": {
-    "healthScore": 8,
-    "healthStatus": "healthy",
+    "healthScore": 7,
+    "healthStatus": "warning",
     "platforms": {
       "n8n_vps": {
         "status": "operational",
-        "summary": "7 active workflows running, minor issues with health check workflow"
+        "summary": "7 active workflows running, some intermittent failures"
       },
       "apps_script": {
         "status": "unknown",
-        "summary": "No data received in health check"
+        "summary": "No data available"
       }
     },
-    "mcpConnections": [],
+    "workflows": [
+      {
+        "name": "Scrape Lead Profile LinkedIn",
+        "category": "linkedin",
+        "active": true,
+        "status": "running",
+        "description": "Scrapes detailed profile information from LinkedIn leads for enrichment",
+        "schedule": "On-demand",
+        "lastRun": "No recent data",
+        "successRate": "No recent data"
+      },
+      {
+        "name": "[ONLINE] - Content Capture Bot",
+        "category": "content",
+        "active": true,
+        "status": "running",
+        "description": "Captures and processes content from various online sources automatically",
+        "schedule": "Real-time",
+        "lastRun": "No recent data",
+        "successRate": "No recent data"
+      },
+      {
+        "name": "Daily Health Check",
+        "category": "system",
+        "active": true,
+        "status": "warning",
+        "description": "Daily system health report sent to Slack and dashboard",
+        "schedule": "Daily 6AM",
+        "lastRun": "24min ago",
+        "successRate": "3/6 last 24h"
+      },
+      {
+        "name": "YouTube Scout Scraper (Weekly)",
+        "category": "content",
+        "active": true,
+        "status": "running",
+        "description": "Weekly scraping of YouTube channels for content ideas and analytics",
+        "schedule": "Weekly",
+        "lastRun": "16h ago",
+        "successRate": "1/1 last 24h"
+      },
+      {
+        "name": "Linkedin Post Capture",
+        "category": "linkedin",
+        "active": true,
+        "status": "running",
+        "description": "Captures LinkedIn posts for lead generation and content analysis",
+        "schedule": "Real-time",
+        "lastRun": "No recent data",
+        "successRate": "No recent data"
+      },
+      {
+        "name": "LinkedIn Comment Scraper",
+        "category": "linkedin",
+        "active": true,
+        "status": "running",
+        "description": "Scrapes comments on LinkedIn posts to find potential leads",
+        "schedule": "Real-time",
+        "lastRun": "No recent data",
+        "successRate": "No recent data"
+      },
+      {
+        "name": "GHL to Notion CRM Sync (Webhook)",
+        "category": "crm",
+        "active": true,
+        "status": "running",
+        "description": "Syncs GHL pipeline changes to Notion CRM in real-time",
+        "schedule": "Real-time webhook",
+        "lastRun": "No recent data",
+        "successRate": "No recent data"
+      },
+      {
+        "name": "Tradacc - Discord Remove Role",
+        "category": "other",
+        "active": false,
+        "status": "paused",
+        "description": "Legacy Tradacc Discord role management automation"
+      },
+      {
+        "name": "Tradacc - Post-Call Relay v2.8.1",
+        "category": "other",
+        "active": false,
+        "status": "paused",
+        "description": "Legacy Tradacc post-call processing automation"
+      },
+      {
+        "name": "Tag Engine -A",
+        "category": "other",
+        "active": false,
+        "status": "paused",
+        "description": "Legacy Tradacc tagging engine component A"
+      },
+      {
+        "name": "ElevenLabs Call Logs Sync",
+        "category": "elevenlabs",
+        "active": false,
+        "status": "paused",
+        "description": "Syncs ElevenLabs call logs data (pre-revenue feature)"
+      },
+      {
+        "name": "GHL to Supabase Sync (Polling)",
+        "category": "crm",
+        "active": false,
+        "status": "paused",
+        "description": "Legacy GHL to Supabase sync replaced by Notion CRM"
+      },
+      {
+        "name": "Call Recordings → Notion CRM + GHL",
+        "category": "crm",
+        "active": false,
+        "status": "paused",
+        "description": "Experimental call recording processing to CRM systems"
+      },
+      {
+        "name": "Tradacc - Discord Add Role",
+        "category": "other",
+        "active": false,
+        "status": "paused",
+        "description": "Legacy Tradacc Discord role management automation"
+      },
+      {
+        "name": "ElevenLabs Agent Config Sync",
+        "category": "elevenlabs",
+        "active": false,
+        "status": "paused",
+        "description": "Syncs ElevenLabs agent configuration (pre-revenue feature)"
+      },
+      {
+        "name": "Fetching Data - Call Init",
+        "category": "other",
+        "active": false,
+        "status": "paused",
+        "description": "Legacy Tradacc call initialization data fetching"
+      },
+      {
+        "name": "Trigger Number 2",
+        "category": "other",
+        "active": false,
+        "status": "paused",
+        "description": "Legacy Tradacc trigger component 2"
+      },
+      {
+        "name": "Airbnb Cleaning Reminder",
+        "category": "other",
+        "active": false,
+        "status": "paused",
+        "description": "Personal Airbnb cleaning reminder automation"
+      },
+      {
+        "name": "My workflow",
+        "category": "other",
+        "active": false,
+        "status": "paused",
+        "description": "Empty workflow template for testing"
+      },
+      {
+        "name": "Tradacc - Content Repurposing",
+        "category": "content",
+        "active": false,
+        "status": "paused",
+        "description": "Legacy Tradacc content repurposing automation"
+      },
+      {
+        "name": "Beavermind - Repurpousing Machine (Reworked)",
+        "category": "content",
+        "active": false,
+        "status": "paused",
+        "description": "Experimental content repurposing machine for Beavermind"
+      },
+      {
+        "name": "Payments Monitor",
+        "category": "other",
+        "active": false,
+        "status": "paused",
+        "description": "Personal payment monitoring automation"
+      },
+      {
+        "name": "GHL to Supabase Bridge",
+        "category": "crm",
+        "active": false,
+        "status": "paused",
+        "description": "Legacy GHL to Supabase bridge replaced by Notion CRM"
+      },
+      {
+        "name": "ElevenLabs Usage Sync",
+        "category": "elevenlabs",
+        "active": false,
+        "status": "paused",
+        "description": "Syncs ElevenLabs usage data (pre-revenue feature)"
+      },
+      {
+        "name": "Tag Engine -B",
+        "category": "other",
+        "active": false,
+        "status": "paused",
+        "description": "Legacy Tradacc tagging engine component B"
+      },
+      {
+        "name": "Drive Report Monitor (LinkedIn Agency)",
+        "category": "other",
+        "active": false,
+        "status": "paused",
+        "description": "Google Drive report monitor waiting for onboarding data"
+      },
+      {
+        "name": "Call Tools Relays v1.7.1",
+        "category": "other",
+        "active": false,
+        "status": "paused",
+        "description": "Legacy Tradacc call tools relay system"
+      },
+      {
+        "name": "Trigger Number 1",
+        "category": "other",
+        "active": false,
+        "status": "paused",
+        "description": "Legacy Tradacc trigger component 1"
+      },
+      {
+        "name": "Ruben - Content Repurposing",
+        "category": "content",
+        "active": false,
+        "status": "paused",
+        "description": "Personal content repurposing automation for Ruben"
+      }
+    ],
     "supabaseTables": {},
     "recommendations": [
-      "Debug Daily Health Check failures (workflow ID: JQv1zQSF8hDwuYmF)",
-      "Monitor LinkedIn workflows for any performance issues",
-      "Check Supabase connection (no table data received)",
-      "Review error patterns in health monitoring",
-      "Strengthen system monitoring capabilities"
+      "Investigate Daily Health Check workflow error pattern - 3 failures since yesterday",
+      "Monitor other active workflows for execution data",
+      "Verify Supabase table sync is working properly"
     ],
     "history": []
-  },
-  "stats": {
-    "areas": 7,
-    "skills": 13,
-    "connections": 0
   }
 }
