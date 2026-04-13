@@ -1,66 +1,32 @@
 {
-  "generatedAt": "2026-04-13T08:42:14.447Z",
+  "generatedAt": "2026-04-13T19:49:42.200Z",
   "healthReport": {
-    "healthScore": 6,
-    "healthStatus": "warning",
-    "localDataAge": "55 hours ago",
+    "healthScore": 8,
+    "healthStatus": "healthy",
     "platforms": {
       "n8n_vps": {
-        "status": "degraded",
-        "summary": "7 active workflows, ElevenLabs monitoring down, GHL sync failing"
-      },
-      "local_tasks": {
-        "status": "degraded",
-        "summary": "Data stale for 55 hours, 5 MCP connections working"
+        "status": "operational",
+        "summary": "7 active workflows running, minor issues with health check workflow"
       },
       "apps_script": {
         "status": "unknown",
-        "summary": "Status cannot be determined from private channel"
+        "summary": "No data received in health check"
       }
     },
-    "mcpConnections": [
-      {
-        "name": "Gmail",
-        "status": "working"
-      },
-      {
-        "name": "Google Calendar",
-        "status": "working"
-      },
-      {
-        "name": "Slack",
-        "status": "working"
-      },
-      {
-        "name": "Notion",
-        "status": "working"
-      },
-      {
-        "name": "Supabase",
-        "status": "working"
-      },
-      {
-        "name": "GitHub",
-        "status": "unknown"
-      },
-      {
-        "name": "Google Drive",
-        "status": "unknown"
-      }
-    ],
+    "mcpConnections": [],
     "supabaseTables": {},
     "recommendations": [
-      "Investigate and reactivate ElevenLabs workflows that went inactive on April 13",
-      "Debug GHL to Supabase sync failures occurring every 3 hours",
-      "Refresh local data sync (currently 55 hours stale)",
-      "Set up monitoring alerts for critical workflow failures",
-      "Review and clean up 23 inactive workflows to reduce clutter"
+      "Debug Daily Health Check failures (workflow ID: JQv1zQSF8hDwuYmF)",
+      "Monitor LinkedIn workflows for any performance issues",
+      "Check Supabase connection (no table data received)",
+      "Review error patterns in health monitoring",
+      "Strengthen system monitoring capabilities"
     ],
     "history": []
   },
   "stats": {
     "areas": 7,
-    "skills": 8,
-    "connections": 7
+    "skills": 13,
+    "connections": 0
   }
 }
