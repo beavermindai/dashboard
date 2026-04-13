@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-04-13T06:00:44.014Z",
+  "generatedAt": "2026-04-13T08:42:14.447Z",
   "healthReport": {
-    "healthScore": 4,
-    "healthStatus": "critical",
-    "localDataAge": "3192 minutes ago",
+    "healthScore": 6,
+    "healthStatus": "warning",
+    "localDataAge": "55 hours ago",
     "platforms": {
       "n8n_vps": {
         "status": "degraded",
-        "summary": "8 active workflows, multiple sync failures, ElevenLabs integration down"
+        "summary": "7 active workflows, ElevenLabs monitoring down, GHL sync failing"
       },
       "local_tasks": {
         "status": "degraded",
-        "summary": "Data stale (53 hours), MCP connections working, sync task enabled"
+        "summary": "Data stale for 55 hours, 5 MCP connections working"
       },
       "apps_script": {
         "status": "unknown",
-        "summary": "Cannot determine status from private channel"
+        "summary": "Status cannot be determined from private channel"
       }
     },
     "mcpConnections": [
@@ -50,11 +50,11 @@
     ],
     "supabaseTables": {},
     "recommendations": [
-      "Fix GHL to Supabase polling sync immediately",
-      "Investigate and restart ElevenLabs monitoring workflows",
-      "Update local system sync to resolve 53-hour stale data",
-      "Review and clean up 22 inactive workflows",
-      "Implement monitoring for Apps Script status"
+      "Investigate and reactivate ElevenLabs workflows that went inactive on April 13",
+      "Debug GHL to Supabase sync failures occurring every 3 hours",
+      "Refresh local data sync (currently 55 hours stale)",
+      "Set up monitoring alerts for critical workflow failures",
+      "Review and clean up 23 inactive workflows to reduce clutter"
     ],
     "history": []
   },
