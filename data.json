@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-04-12T06:00:39.078Z",
+  "generatedAt": "2026-04-13T06:00:44.014Z",
   "healthReport": {
-    "healthScore": 5,
-    "healthStatus": "warning",
-    "localDataAge": "1752 minutes ago",
+    "healthScore": 4,
+    "healthStatus": "critical",
+    "localDataAge": "3192 minutes ago",
     "platforms": {
       "n8n_vps": {
         "status": "degraded",
-        "summary": "8 active workflows, multiple ElevenLabs failures, GHL sync issues"
+        "summary": "8 active workflows, multiple sync failures, ElevenLabs integration down"
       },
       "local_tasks": {
         "status": "degraded",
-        "summary": "Data available but stale (29 hours old), 8 skills, 5 scheduled tasks"
+        "summary": "Data stale (53 hours), MCP connections working, sync task enabled"
       },
       "apps_script": {
         "status": "unknown",
-        "summary": "Status cannot be determined - private channel"
+        "summary": "Cannot determine status from private channel"
       }
     },
     "mcpConnections": [
@@ -50,10 +50,11 @@
     ],
     "supabaseTables": {},
     "recommendations": [
-      "Fix ElevenLabs integration issues - multiple workflows failing repeatedly",
-      "Investigate and resolve GHL to Supabase sync failures",
-      "Update local sync process to prevent data staleness beyond 24 hours",
-      "Review and clean up 22 inactive workflows for better system organization"
+      "Fix GHL to Supabase polling sync immediately",
+      "Investigate and restart ElevenLabs monitoring workflows",
+      "Update local system sync to resolve 53-hour stale data",
+      "Review and clean up 22 inactive workflows",
+      "Implement monitoring for Apps Script status"
     ],
     "history": []
   },
