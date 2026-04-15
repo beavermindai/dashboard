@@ -1,57 +1,57 @@
 {
-  "generatedAt": "2026-04-14T06:00:46.444Z",
+  "generatedAt": "2026-04-15T06:00:41.433Z",
   "healthReport": {
     "healthScore": 8,
     "healthStatus": "healthy",
     "platforms": {
       "n8n_vps": {
         "status": "operational",
-        "summary": "7 active workflows running with minimal issues"
+        "summary": "7 active workflows running, mostly stable performance"
       },
       "apps_script": {
         "status": "unknown",
-        "summary": "No execution data available"
+        "summary": "No data available"
       }
     },
     "workflows": [
-      {
-        "name": "Daily Health Check",
-        "category": "system",
-        "active": true,
-        "status": "warning",
-        "description": "Monitors system health and sends daily reports to Slack and dashboard",
-        "schedule": "Daily 6AM",
-        "lastRun": "10h ago",
-        "successRate": "5/7 last 24h"
-      },
       {
         "name": "Scrape Lead Profile LinkedIn",
         "category": "linkedin",
         "active": true,
         "status": "running",
-        "description": "Extracts detailed profile information from LinkedIn leads for qualification",
-        "schedule": "On demand",
-        "lastRun": "No recent runs",
-        "successRate": "0/0 last 24h"
+        "description": "Scrapes LinkedIn profiles of leads to gather contact information",
+        "schedule": "On-demand",
+        "lastRun": "No recent data",
+        "successRate": "No recent data"
       },
       {
         "name": "[ONLINE] - Content Capture Bot",
         "category": "content",
         "active": true,
         "status": "running",
-        "description": "Captures and processes content from various online sources for repurposing",
+        "description": "Captures and processes content from various online sources automatically",
         "schedule": "Real-time",
-        "lastRun": "No recent runs",
-        "successRate": "0/0 last 24h"
+        "lastRun": "No recent data",
+        "successRate": "No recent data"
+      },
+      {
+        "name": "Daily Health Check",
+        "category": "system",
+        "active": true,
+        "status": "warning",
+        "description": "Daily system health report sent to Slack and dashboard",
+        "schedule": "Daily 6AM",
+        "lastRun": "24h ago",
+        "successRate": "5/8 last 24h"
       },
       {
         "name": "YouTube Scout Scraper (Weekly)",
         "category": "content",
         "active": true,
         "status": "running",
-        "description": "Weekly scan of YouTube channels for trending content and opportunities",
+        "description": "Weekly scraping of YouTube content for competitive intelligence",
         "schedule": "Weekly Sunday 4AM",
-        "lastRun": "1d ago",
+        "lastRun": "3 days ago",
         "successRate": "1/1 last 24h"
       },
       {
@@ -59,257 +59,191 @@
         "category": "linkedin",
         "active": true,
         "status": "running",
-        "description": "Monitors and captures LinkedIn posts for lead generation and engagement tracking",
+        "description": "Captures LinkedIn posts for content analysis and lead generation",
         "schedule": "Real-time",
-        "lastRun": "No recent runs",
-        "successRate": "0/0 last 24h"
+        "lastRun": "No recent data",
+        "successRate": "No recent data"
       },
       {
         "name": "LinkedIn Comment Scraper",
         "category": "linkedin",
         "active": true,
         "status": "running",
-        "description": "Scrapes comments on LinkedIn posts to find potential leads and engagement opportunities",
+        "description": "Scrapes comments on LinkedIn posts to find potential leads",
         "schedule": "Real-time",
-        "lastRun": "No recent runs",
-        "successRate": "0/0 last 24h"
+        "lastRun": "No recent data",
+        "successRate": "No recent data"
       },
       {
         "name": "GHL to Notion CRM Sync (Webhook)",
         "category": "crm",
         "active": true,
         "status": "running",
-        "description": "Real-time sync of GoHighLevel pipeline changes to Notion CRM database",
+        "description": "Syncs GHL pipeline changes to Notion CRM in real-time",
         "schedule": "Real-time webhook",
-        "lastRun": "No recent runs",
-        "successRate": "0/0 last 24h"
+        "lastRun": "No recent data",
+        "successRate": "No recent data"
       },
       {
         "name": "Tradacc - Discord Remove Role",
         "category": "other",
         "active": false,
         "status": "paused",
-        "description": "Legacy Discord automation for removing user roles",
-        "schedule": "On demand",
-        "lastRun": null,
-        "successRate": null
+        "description": "Legacy trading community Discord role management system"
       },
       {
         "name": "Tradacc - Post-Call Relay v2.8.1",
         "category": "other",
         "active": false,
         "status": "paused",
-        "description": "Legacy post-call processing automation",
-        "schedule": "On demand",
-        "lastRun": null,
-        "successRate": null
+        "description": "Legacy trading community post-call processing automation"
       },
       {
         "name": "Tag Engine -A",
         "category": "other",
         "active": false,
         "status": "paused",
-        "description": "Legacy tagging automation system component A",
-        "schedule": "On demand",
-        "lastRun": null,
-        "successRate": null
+        "description": "Legacy trading community tagging system component A"
       },
       {
         "name": "ElevenLabs Call Logs Sync",
         "category": "elevenlabs",
         "active": false,
         "status": "paused",
-        "description": "Syncs ElevenLabs call logs to database for analysis",
-        "schedule": "Every 30min",
-        "lastRun": null,
-        "successRate": null
+        "description": "Syncs call logs from ElevenLabs voice platform"
       },
       {
         "name": "GHL to Supabase Sync (Polling)",
         "category": "crm",
         "active": false,
         "status": "paused",
-        "description": "Polling-based sync from GoHighLevel to Supabase database",
-        "schedule": "Hourly",
-        "lastRun": null,
-        "successRate": null
+        "description": "Polling-based sync between GHL and Supabase database"
       },
       {
         "name": "Call Recordings → Notion CRM + GHL",
         "category": "crm",
         "active": false,
         "status": "paused",
-        "description": "Processes call recordings and syncs data to CRM systems",
-        "schedule": "On demand",
-        "lastRun": null,
-        "successRate": null
+        "description": "Processes call recordings and updates CRM systems"
       },
       {
         "name": "Tradacc - Discord Add Role",
         "category": "other",
         "active": false,
         "status": "paused",
-        "description": "Legacy Discord automation for adding user roles",
-        "schedule": "On demand",
-        "lastRun": null,
-        "successRate": null
+        "description": "Legacy trading community Discord role assignment system"
       },
       {
         "name": "ElevenLabs Agent Config Sync",
         "category": "elevenlabs",
         "active": false,
         "status": "paused",
-        "description": "Syncs ElevenLabs agent configurations across environments",
-        "schedule": "Hourly",
-        "lastRun": null,
-        "successRate": null
+        "description": "Synchronizes agent configurations with ElevenLabs platform"
       },
       {
         "name": "Fetching Data - Call Init",
         "category": "other",
         "active": false,
         "status": "paused",
-        "description": "Legacy call initialization data fetching automation",
-        "schedule": "On demand",
-        "lastRun": null,
-        "successRate": null
+        "description": "Legacy trading community call initialization data fetcher"
       },
       {
         "name": "Trigger Number 2",
         "category": "other",
         "active": false,
         "status": "paused",
-        "description": "Legacy trigger automation component",
-        "schedule": "On demand",
-        "lastRun": null,
-        "successRate": null
+        "description": "Legacy trading community trigger system component 2"
       },
       {
         "name": "Airbnb Cleaning Reminder",
         "category": "other",
         "active": false,
         "status": "paused",
-        "description": "Personal automation for Airbnb cleaning schedule reminders",
-        "schedule": "Weekly",
-        "lastRun": null,
-        "successRate": null
+        "description": "Personal Airbnb property cleaning schedule reminder system"
       },
       {
         "name": "My workflow",
         "category": "other",
         "active": false,
         "status": "paused",
-        "description": "Empty template workflow for testing and development",
-        "schedule": "Manual",
-        "lastRun": null,
-        "successRate": null
+        "description": "Empty workflow template for testing and development"
       },
       {
         "name": "Tradacc - Content Repurposing",
-        "category": "content",
+        "category": "other",
         "active": false,
         "status": "paused",
-        "description": "Legacy content repurposing automation for Tradacc brand",
-        "schedule": "Daily",
-        "lastRun": null,
-        "successRate": null
+        "description": "Legacy trading community content repurposing automation"
       },
       {
         "name": "Beavermind - Repurpousing Machine (Reworked)",
         "category": "content",
         "active": false,
         "status": "paused",
-        "description": "Experimental content repurposing system for BeaverMind",
-        "schedule": "Daily",
-        "lastRun": null,
-        "successRate": null
+        "description": "Experimental content repurposing system for BeaverMind content"
       },
       {
         "name": "Payments Monitor",
         "category": "other",
         "active": false,
         "status": "paused",
-        "description": "Personal automation for monitoring payment transactions",
-        "schedule": "Daily",
-        "lastRun": null,
-        "successRate": null
+        "description": "Personal payment tracking and monitoring system"
       },
       {
         "name": "GHL to Supabase Bridge",
         "category": "crm",
         "active": false,
         "status": "paused",
-        "description": "Bridge service for connecting GoHighLevel to Supabase database",
-        "schedule": "Real-time",
-        "lastRun": null,
-        "successRate": null
+        "description": "Bridge connector between GHL and Supabase systems"
       },
       {
         "name": "ElevenLabs Usage Sync",
         "category": "elevenlabs",
         "active": false,
         "status": "paused",
-        "description": "Tracks and syncs ElevenLabs API usage metrics",
-        "schedule": "Hourly",
-        "lastRun": null,
-        "successRate": null
+        "description": "Tracks and syncs usage metrics from ElevenLabs platform"
       },
       {
         "name": "Tag Engine -B",
         "category": "other",
         "active": false,
         "status": "paused",
-        "description": "Legacy tagging automation system component B",
-        "schedule": "On demand",
-        "lastRun": null,
-        "successRate": null
+        "description": "Legacy trading community tagging system component B"
       },
       {
         "name": "Drive Report Monitor (LinkedIn Agency)",
         "category": "system",
         "active": false,
         "status": "paused",
-        "description": "Monitors Google Drive reports for LinkedIn agency onboarding progress",
-        "schedule": "Hourly",
-        "lastRun": null,
-        "successRate": null
+        "description": "Monitors Google Drive reports for LinkedIn agency operations"
       },
       {
         "name": "Call Tools Relays v1.7.1",
         "category": "other",
         "active": false,
         "status": "paused",
-        "description": "Legacy call tools relay system for automated responses",
-        "schedule": "Real-time",
-        "lastRun": null,
-        "successRate": null
+        "description": "Legacy trading community call tools relay system"
       },
       {
         "name": "Trigger Number 1",
         "category": "other",
         "active": false,
         "status": "paused",
-        "description": "Legacy trigger automation component",
-        "schedule": "On demand",
-        "lastRun": null,
-        "successRate": null
+        "description": "Legacy trading community trigger system component 1"
       },
       {
         "name": "Ruben - Content Repurposing",
         "category": "content",
         "active": false,
         "status": "paused",
-        "description": "Personal content repurposing automation for Ruben",
-        "schedule": "Daily",
-        "lastRun": null,
-        "successRate": null
+        "description": "Personal content repurposing automation for Ruben's content"
       }
     ],
     "supabaseTables": {},
     "recommendations": [
-      "Debug Daily Health Check morning failures around 9AM UTC",
-      "Monitor LinkedIn workflows for incoming traffic and webhook activity",
-      "Verify all webhook endpoints are responsive and properly configured"
+      "Investigate Daily Health Check errors from April 13th to prevent future failures",
+      "Verify Supabase data collection is working properly - no table data received",
+      "Monitor Content Capture Bot and LinkedIn workflows for execution data"
     ],
     "history": []
   }
